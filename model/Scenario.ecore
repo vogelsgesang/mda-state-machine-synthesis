@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="scenario"
+    nsURI="urn:scenario/1.0" nsPrefix="scenario">
+  <eClassifiers xsi:type="ecore:EClass" name="Scenario">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="communications" upperBound="-1"
+        eType="#//Communication" eOpposite="#//Communication/parentScenario"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Communication" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentScenario" lowerBound="1"
+        eType="#//Scenario" eOpposite="#//Scenario/communications"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UserCommunication" eSuperTypes="#//Communication">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sender" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//SystemActor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//Operation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receiver" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//UserActor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="returnValue" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//Return"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SystemCommunication" eSuperTypes="#//Communication">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preState" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//State"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sender" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//SystemActor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//Operation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receiver" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//SystemActor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="returnValue" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//Return"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="postState" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//State"/>
+  </eClassifiers>
+</ecore:EPackage>
