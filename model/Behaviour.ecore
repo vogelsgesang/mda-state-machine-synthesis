@@ -26,7 +26,7 @@
         eType="ecore:EClass CommonConcepts.ecore#//Operation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Activation">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="outMessages" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outMessages" upperBound="-1"
         eType="#//OutMessage"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="returnValue" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//Return"/>
