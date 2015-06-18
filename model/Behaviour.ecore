@@ -5,7 +5,7 @@
     nsURI="urn:behaviour/1.0" nsPrefix="behaviour">
   <eClassifiers xsi:type="ecore:EClass" name="Behaviour">
     <eStructuralFeatures xsi:type="ecore:EReference" name="blocks" upperBound="-1"
-        eType="#//Block" eOpposite="#//Block/parentBehaviour"/>
+        eType="#//Block" containment="true" eOpposite="#//Block/parentBehaviour"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mainActor" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//SystemActor"/>
   </eClassifiers>

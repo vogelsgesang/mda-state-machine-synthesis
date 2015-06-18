@@ -5,9 +5,9 @@
     nsURI="urn:io-automaton/1.0" nsPrefix="ioAutomaton">
   <eClassifiers xsi:type="ecore:EClass" name="Automaton">
     <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" ordered="false"
-        upperBound="-1" eType="#//Transition" eOpposite="#//Transition/automaton"/>
+        upperBound="-1" eType="#//Transition" containment="true" eOpposite="#//Transition/automaton"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" ordered="false"
-        upperBound="-1" eType="#//State"/>
+        upperBound="-1" eType="#//State" containment="true" eOpposite="#//State/automaton"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="startState" lowerBound="1"
         eType="#//State"/>
   </eClassifiers>

@@ -9,7 +9,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="UserActor" eSuperTypes="#//Actor"/>
   <eClassifiers xsi:type="ecore:EClass" name="SystemActor" eSuperTypes="#//Actor"/>
   <eClassifiers xsi:type="ecore:EClass" name="Return">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="State">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
