@@ -4,7 +4,13 @@
   <eAnnotations source="http://www.eclipse.org/OCL/Import">
     <details key="commonconcepts" value="CommonConcepts.ecore#/"/>
   </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="AutomatonCollection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="automatons" ordered="false"
+        upperBound="-1" eType="#//Automaton" eOpposite="#//Automaton/collection"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Automaton">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="collection" lowerBound="1"
+        eType="#//AutomatonCollection" eOpposite="#//AutomatonCollection/automatons"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" ordered="false"
         upperBound="-1" eType="#//Transition" eOpposite="#//Transition/automaton"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" ordered="false"
