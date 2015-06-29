@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ioAutomaton" nsURI="urn:io-automaton/1.0" nsPrefix="ioAutomaton">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="commonconcepts" value="CommonConcepts.ecore#/"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="AutomatonCollection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="automatons" ordered="false"
+        upperBound="-1" eType="#//Automaton" eOpposite="#//Automaton/collection"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Automaton">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="collection" lowerBound="1"
+        eType="#//AutomatonCollection" eOpposite="#//AutomatonCollection/automatons"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" ordered="false"
+        upperBound="-1" eType="#//Transition" eOpposite="#//Transition/automaton"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="states" ordered="false"
+        upperBound="-1" eType="#//State" containment="true" eOpposite="#//State/automaton"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="startState" lowerBound="1"
+        eType="#//State" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="CommonConcepts.ecore#//State">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="automaton" lowerBound="1"
+        eType="#//Automaton" eOpposite="#//Automaton/states"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" ordered="false"
+        upperBound="-1" eType="#//Transition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="automaton" lowerBound="1"
+        eType="#//Automaton" eOpposite="#//Automaton/transitions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preState" lowerBound="1"
+        eType="#//State" eOpposite="#//State/outgoingTransitions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//Operation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outMessages" upperBound="-1"
+        eType="#//OutMessage" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="returnValue" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//Return" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="postState" lowerBound="1"
+        eType="#//State"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OutMessage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//Operation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receiver" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//Actor" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="returnValue" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//Return" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>
