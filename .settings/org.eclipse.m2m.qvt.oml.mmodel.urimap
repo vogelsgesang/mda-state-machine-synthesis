@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uriMap:MappingContainer xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:uriMap="http:///www.eclipse.org/m2m/qvt/oml/MModelUriMap/1.0.0">
+  <mapping sourceURI="urn:behaviour/1.0" targetURI="platform:/resource/mda-state-machine-synthesis/metamodel/Behaviour.ecore"/>
+  <mapping sourceURI="urn:io-automaton/1.0" targetURI="platform:/resource/mda-state-machine-synthesis/metamodel/IOAutomaton.ecore"/>
+  <mapping sourceURI="urn:scenario/1.0" targetURI="platform:/resource/mda-state-machine-synthesis/metamodel/Scenario.ecore"/>
+</uriMap:MappingContainer>
