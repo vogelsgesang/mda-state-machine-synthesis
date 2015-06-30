@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/mda-state-machine-synthesis/src" modelPluginID="mda-state-machine-synthesis"
+    modelName="IOAutomaton" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>IOAutomaton.ecore</foreignModel>
+  <genPackages prefix="IoAutomaton" disposableProviderFactory="true" ecorePackage="IOAutomaton.ecore#/">
+    <genClasses ecoreClass="IOAutomaton.ecore#//AutomatonCollection">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//AutomatonCollection/automatons"/>
+    </genClasses>
+    <genClasses ecoreClass="IOAutomaton.ecore#//Automaton">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/collection"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/mainActor"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/transitions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/states"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/startState"/>
+    </genClasses>
+    <genClasses ecoreClass="IOAutomaton.ecore#//State">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference IOAutomaton.ecore#//State/automaton"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//State/outgoingTransitions"/>
+    </genClasses>
+    <genClasses ecoreClass="IOAutomaton.ecore#//Transition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/automaton"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/preState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/operation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/outMessages"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/returnValue"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/postState"/>
+    </genClasses>
+    <genClasses ecoreClass="IOAutomaton.ecore#//OutMessage">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//OutMessage/operation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//OutMessage/receiver"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//OutMessage/returnValue"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Commonconcepts" disposableProviderFactory="true" ecorePackage="CommonConcepts.ecore#/">
+    <genClasses image="false" ecoreClass="CommonConcepts.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CommonConcepts.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="CommonConcepts.ecore#//Actor"/>
+    <genClasses ecoreClass="CommonConcepts.ecore#//UserActor"/>
+    <genClasses ecoreClass="CommonConcepts.ecore#//SystemActor"/>
+    <genClasses ecoreClass="CommonConcepts.ecore#//Return">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CommonConcepts.ecore#//Return/value"/>
+    </genClasses>
+    <genClasses ecoreClass="CommonConcepts.ecore#//State"/>
+    <genClasses ecoreClass="CommonConcepts.ecore#//Operation"/>
+  </genPackages>
+</genmodel:GenModel>

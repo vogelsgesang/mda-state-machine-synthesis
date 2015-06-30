@@ -20,7 +20,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UserCommunication" eSuperTypes="#//Communication">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sender" lowerBound="1"
-        eType="ecore:EClass CommonConcepts.ecore#//SystemActor" containment="true"/>
+        eType="ecore:EClass CommonConcepts.ecore#//Actor" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//Operation" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="receiver" lowerBound="1"

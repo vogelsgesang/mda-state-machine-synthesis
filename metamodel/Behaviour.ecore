@@ -11,10 +11,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="Behaviour">
     <eStructuralFeatures xsi:type="ecore:EReference" name="collection" lowerBound="1"
         eType="#//BehaviourCollection" eOpposite="#//BehaviourCollection/behaviours"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="blocks" upperBound="-1"
-        eType="#//Block" containment="true" eOpposite="#//Block/parentBehaviour"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mainActor" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//SystemActor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="blocks" upperBound="-1"
+        eType="#//Block" containment="true" eOpposite="#//Block/parentBehaviour"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Block">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentBehaviour" lowerBound="1"
@@ -23,7 +23,7 @@
         eType="ecore:EClass CommonConcepts.ecore#//State" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inMessage" lowerBound="1"
         eType="#//InMessage" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="action" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="activation" lowerBound="1"
         eType="#//Activation" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="postState" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//State" containment="true"/>

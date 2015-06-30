@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/mda-state-machine-synthesis/src" modelPluginID="mda-state-machine-synthesis"
+    modelName="Scenario" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>Scenario.ecore</foreignModel>
+  <genPackages prefix="Scenario" disposableProviderFactory="true" ecorePackage="Scenario.ecore#/">
+    <genClasses ecoreClass="Scenario.ecore#//ScenarioCollection">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//ScenarioCollection/scenarios"/>
+    </genClasses>
+    <genClasses ecoreClass="Scenario.ecore#//Scenario">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Scenario.ecore#//Scenario/collection"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//Scenario/communications"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Scenario.ecore#//Communication">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Scenario.ecore#//Communication/parentScenario"/>
+    </genClasses>
+    <genClasses ecoreClass="Scenario.ecore#//UserCommunication">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//UserCommunication/sender"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//UserCommunication/operation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//UserCommunication/receiver"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//UserCommunication/returnValue"/>
+    </genClasses>
+    <genClasses ecoreClass="Scenario.ecore#//SystemCommunication">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//SystemCommunication/preState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//SystemCommunication/sender"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//SystemCommunication/operation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//SystemCommunication/receiver"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//SystemCommunication/returnValue"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Scenario.ecore#//SystemCommunication/postState"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Commonconcepts" disposableProviderFactory="true" ecorePackage="CommonConcepts.ecore#/">
+    <genClasses image="false" ecoreClass="CommonConcepts.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CommonConcepts.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="CommonConcepts.ecore#//Actor"/>
+    <genClasses ecoreClass="CommonConcepts.ecore#//UserActor"/>
+    <genClasses ecoreClass="CommonConcepts.ecore#//SystemActor"/>
+    <genClasses ecoreClass="CommonConcepts.ecore#//Return">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CommonConcepts.ecore#//Return/value"/>
+    </genClasses>
+    <genClasses ecoreClass="CommonConcepts.ecore#//State"/>
+    <genClasses ecoreClass="CommonConcepts.ecore#//Operation"/>
+  </genPackages>
+</genmodel:GenModel>

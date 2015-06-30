@@ -11,18 +11,20 @@
   <eClassifiers xsi:type="ecore:EClass" name="Automaton">
     <eStructuralFeatures xsi:type="ecore:EReference" name="collection" lowerBound="1"
         eType="#//AutomatonCollection" eOpposite="#//AutomatonCollection/automatons"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mainActor" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//SystemActor"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" ordered="false"
         upperBound="-1" eType="#//Transition" eOpposite="#//Transition/automaton"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" ordered="false"
         upperBound="-1" eType="#//State" containment="true" eOpposite="#//State/automaton"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="startState" lowerBound="1"
-        eType="#//State" containment="true"/>
+        eType="#//State"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="CommonConcepts.ecore#//State">
     <eStructuralFeatures xsi:type="ecore:EReference" name="automaton" lowerBound="1"
         eType="#//Automaton" eOpposite="#//Automaton/states"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" ordered="false"
-        upperBound="-1" eType="#//Transition" containment="true"/>
+        upperBound="-1" eType="#//Transition" containment="true" eOpposite="#//Transition/preState"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="automaton" lowerBound="1"
