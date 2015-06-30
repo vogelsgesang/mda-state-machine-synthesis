@@ -1,0 +1,128 @@
+modeltype CommonConcepts uses commonconcepts("urn:commonconcepts/1.0"); 
+modeltype UML uses  uml("http://www.eclipse.org/uml2/5.0.0/UML");
+modeltype ScenarioModel uses scenario("urn:scenario/1.0");
+
+
+transformation uml2table(in charts : UML, out scenarios : ScenarioModel);
+
+main() {
+	charts.objectsOfType(Interaction)->map interaction2Scenario();
+}
+
+mapping Interaction::interaction2Scenario() : Scenario {
+	log('Mapping Interaction to Scenario: ', self);
+	
+	// fetch all fragments that are of type MessageOccurrenceSpecification and fulfill the isSend() predicate
+	self.fragment->forEach(f | f.oclIsTypeOf(MessageOccurrenceSpecification) and f.oclAsType(MessageOccurrenceSpecification).isSend()) {
+		var mos := f.oclAsType(MessageOccurrenceSpecification);
+		
+		if (mos.message.messageSort = MessageSort::reply) {
+			// if message held by the MessageOccurrenceSpecification is of sort reply then fetch the last communication that has no reply and map the reply message to it
+			var lastCommWOReply : SystemCommunication := communications->select(c | c.oclIsTypeOf(SystemCommunication) and c.oclAsType(SystemCommunication).returnValue.value = "void")->last().oclAsType(SystemCommunication);
+			lastCommWOReply.returnValue.value := mos.message.name;
+		}	else {
+			// if message is not of sort reply it must be a synchronous call
+			// if receiver of message is the user then the communication is a UserCommunication, else a SystemCommunication
+			if (mos.message.receiveEvent.isUser()) {
+				communications +=  mos.message.map message2UserCommunication(result);
+			}	else {
+				communications +=  mos.message.map message2SystemCommunication(result);
+			};
+		};	
+	};
+}
+
+mapping Message::message2UserCommunication(scenario : Scenario) : UserCommunication
+when {
+	self.receiveEvent.isUser() and self.messageSort <> MessageSort::reply;
+} {
+	log('Mapping Message to UserCommunication: ', self);
+	
+	// set parentScenario
+	parentScenario := scenario;
+	
+	// get operation from message
+	operation := self.map message2Operation();
+	
+	// set "void" as returnValue
+	returnValue := self.map message2ReturnVoid();
+	
+	if (self.sendEvent.isUser()) {
+		// if message is sent by user then set "user" as sender
+		sender := self.sendEvent.map messageEnd2UserActor();
+	}	else {
+		// if not then set the corresponding sender
+		sender := self.sendEvent.map messageEnd2SystemActor();
+	};
+	// set "user" as receiver
+	receiver := self.receiveEvent.map messageEnd2UserActor();
+}
+
+mapping Message::message2SystemCommunication(scenario : Scenario) : SystemCommunication
+when {
+	not (self.receiveEvent.isUser()) and self.messageSort <> MessageSort::reply;
+} {
+	log('Mapping Message to SystemCommunication: ', self);
+	
+	// set parentScenario
+	parentScenario := scenario;
+
+	// get operation from message
+	operation := self.map message2Operation();
+	
+	// set "void" as returnValue
+	returnValue := self.map message2ReturnVoid();
+	
+	if (self.sendEvent.isUser()) {
+		// if message is sent by user then set "user" as sender
+		sender := self.sendEvent.map messageEnd2UserActor();
+	}	else {
+		// if not then set the corresponding sender
+		sender := self.sendEvent.map messageEnd2SystemActor();
+	};
+	// set receiver from messageEnd
+	receiver := self.receiveEvent.map messageEnd2SystemActor();
+	
+}
+
+mapping MessageEnd::messageEnd2SystemActor() : SystemActor
+when {
+	not (self.isUser());
+}	{
+	log("Mapping MessageEnd to SystemActor", self);
+	
+	name := self.getLifeline().name;
+}
+	
+mapping MessageEnd::messageEnd2UserActor() : UserActor
+when {
+	self.isUser();
+}	{
+	log("Mapping MessageEnd to UserActor", self);
+	
+	name := "user";
+}
+
+mapping Message::message2ReturnVoid() : Return {
+	value := "void";
+}
+
+mapping Message::message2Operation() : Operation {
+	name := self.name;
+}
+
+
+// helper queries
+
+query MessageEnd::getLifeline() : Lifeline {
+	var mos := self.oclAsType(MessageOccurrenceSpecification);
+	return mos.getCovered();
+}
+
+query MessageEnd::isUser() : Boolean {
+	return self.getLifeline().name.isUser();
+}
+
+query String::isUser() : Boolean {
+	return self = "User" or self = "user"
+}
