@@ -1,0 +1,88 @@
+modeltype BehaviourModel uses "urn:behaviour/1.0";
+modeltype IOAutomatonModel uses "urn:io-automaton/1.0";
+modeltype CommonConcepts uses "urn:commonconcepts/1.0";
+
+transformation behaviourToAutomaton(in table:BehaviourModel, out diagram:IOAutomatonModel);
+
+main() {
+	table.rootObjects()[Behaviour]->map toAutomaton();
+}
+
+mapping BehaviourModel::Behaviour::toAutomaton() : IOAutomatonModel::Automaton {
+	
+	init {
+		log("Start mapping toAutomaton()");
+	}
+	
+
+	//Vorsicht mit States: Gefahr von doppeltem Mapping --> daher resolve verwenden, aber wie?
+	states := self.allSubobjectsOfType(CommonConcepts::State).oclAsType(Set(CommonConcepts::State))->map toAutomatonState(result);
+	
+	transitions := self.blocks->map toTransition(result);
+	self.blocks->map toTransition(result);
+	mainActor := self.mainActor;
+	
+	//TODO: startState
+	//TODO: collection
+	
+	end {
+		log("Finished mapping toAutomaton()");		
+	}
+}
+
+mapping CommonConcepts::State::toAutomatonState(automaton : Automaton) : IOAutomatonModel::State {
+	
+	init {
+		if(automaton.states.name->includes(self.name))
+		then {
+			result := self.resolveone(s:IOAutomatonModel::State | s.name = self.name); 
+		}
+		else{
+			result.automaton := automaton;
+			result.name := self.name;
+		}
+		endif;
+	}	
+}
+
+mapping BehaviourModel::Block::toTransition(automaton : Automaton) : IOAutomatonModel::Transition {
+	
+	init {
+		log("Start mapping toStatesAndTransition()");
+	}
+	
+	
+	result.automaton := automaton;
+	
+	operation := self.inMessage.operation;
+	outMessages := self.activation.outMessages->map toOutMessage();
+	returnValue := self.activation.returnValue;
+	
+	postState := automaton.states->selectOne( s | s.name = self.postState.name );
+	
+	var state := automaton.states->selectOne( s | s.name = self.preState.name );
+	state.outgoingTransitions += Set{result};
+	preState := state;
+
+	
+	
+	s1.name := self.preState.name;
+	s2.name := self.postState.name;
+	s1.automaton := automaton;
+	s2.automaton := automaton;
+	s1.outgoingTransitions := s1.outgoingTransitions->union(Set{t});
+	
+	
+	end {
+		log("Finished mapping toStatesAndTransition()");		
+	}
+}
+
+mapping BehaviourModel::OutMessage::toOutMessage() : IOAutomatonModel::OutMessage {
+	operation := self.operation;
+	receiver := self.receiver;
+	returnValue := self.returnValue;
+}
+
+
+
