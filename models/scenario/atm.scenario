@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commonconcepts="urn:commonconcepts/1.0" xmlns:scenario="urn:scenario/1.0" xsi:schemaLocation="urn:commonconcepts/1.0 ../../metamodel/CommonConcepts.ecore urn:scenario/1.0 ../../metamodel/Scenario.ecore">
+  <scenario:Scenario>
+    <communications xsi:type="scenario:SystemCommunication">
+      <sender xsi:type="commonconcepts:UserActor" name="user"/>
+      <operation name="insertCard"/>
+      <receiver name="atm"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:UserCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="requestPassword"/>
+      <receiver name="user"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:SystemCommunication">
+      <sender xsi:type="commonconcepts:UserActor" name="user"/>
+      <operation name="enterPassword"/>
+      <receiver name="atm"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:SystemCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="verifyAccount"/>
+      <receiver name="consortium"/>
+      <returnValue value="badAccount"/>
+    </communications>
+    <communications xsi:type="scenario:SystemCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="consortium"/>
+      <operation name="verifyCardWithBank"/>
+      <receiver name="bank"/>
+      <returnValue value="badBankAccount"/>
+    </communications>
+    <communications xsi:type="scenario:UserCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="badAccountMessage"/>
+      <receiver name="user"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:UserCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="printReceipt"/>
+      <receiver name="user"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:UserCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="ejectCard"/>
+      <receiver name="user"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:UserCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="requestTakeCard"/>
+      <receiver name="user"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:SystemCommunication">
+      <sender xsi:type="commonconcepts:UserActor" name="user"/>
+      <operation name="takeCard"/>
+      <receiver name="atm"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:UserCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="displayMainScreen"/>
+      <receiver name="user"/>
+      <returnValue value="void"/>
+    </communications>
+  </scenario:Scenario>
+  <scenario:Scenario>
+    <communications xsi:type="scenario:SystemCommunication">
+      <sender xsi:type="commonconcepts:UserActor" name="user"/>
+      <operation name="enterPassword"/>
+      <receiver name="atm"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:SystemCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="verifyAccount"/>
+      <receiver name="consortium"/>
+      <returnValue value="badPassword"/>
+    </communications>
+    <communications xsi:type="scenario:SystemCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="consortium"/>
+      <operation name="verifyCardWithBank"/>
+      <receiver name="bank"/>
+      <returnValue value="badBankPassword"/>
+    </communications>
+    <communications xsi:type="scenario:UserCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="requestPassword"/>
+      <receiver name="user"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:SystemCommunication">
+      <sender xsi:type="commonconcepts:UserActor" name="user"/>
+      <operation name="cancel"/>
+      <receiver name="atm"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:UserCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="canceledMessage"/>
+      <receiver name="user"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:UserCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="ejectCard"/>
+      <receiver name="user"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:UserCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="requestTakeCard"/>
+      <receiver name="user"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:SystemCommunication">
+      <sender xsi:type="commonconcepts:UserActor" name="user"/>
+      <operation name="takeCard"/>
+      <receiver name="atm"/>
+      <returnValue value="void"/>
+    </communications>
+    <communications xsi:type="scenario:UserCommunication">
+      <sender xsi:type="commonconcepts:SystemActor" name="atm"/>
+      <operation name="displayMainScreen"/>
+      <receiver name="user"/>
+      <returnValue value="void"/>
+    </communications>
+  </scenario:Scenario>
+</xmi:XMI>
