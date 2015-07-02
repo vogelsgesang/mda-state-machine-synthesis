@@ -1,4 +1,8 @@
 *.ecore binary
+*.genmodel binary
 *.uml binary
 *.di binary
 *.notation binary
+*.scenario binary
+*.ioautomaton binary
+*.behaviour binary
