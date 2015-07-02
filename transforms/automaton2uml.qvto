@@ -1,0 +1,36 @@
+modeltype CommonConcepts uses commonconcepts("urn:commonconcepts/1.0"); 
+modeltype UML uses  uml("http://www.eclipse.org/uml2/5.0.0/UML");
+modeltype IoAutomaton uses ioAutomaton("urn:io-automaton/1.0");
+
+transformation automaton2uml(in automaton : IoAutomaton, out uml : UML);
+//configuration property actors : Set(String);
+
+main() {
+	automaton.objectsOfType(Automaton)->map automaton2statemachine();
+	//Warum funktioniert das nicht?
+	//automaton.objects()[Automaton]->map automaton2statemachine();
+}
+
+mapping Automaton::automaton2statemachine() : UML::StateMachine {
+	name := "Statemachine for " + self.mainActor.name;
+	//create main region
+	var mainRegion = object UML::Region{};
+	region += mainRegion;
+	//add all the stable states
+	mainRegion.subvertex += self.states->map state2state();
+	//create the init state
+	var initState := object UML::Pseudostate{
+		kind := PseudostateKind::initial;
+		name := 'Start';
+	};
+	mainRegion.subvertex += initState;
+	//and connect it to the first state
+	mainRegion.transition += object UML::Transition {
+		source := initState;
+		target := self.startState.resolveone().oclAsType(UML::Vertex);
+	}
+};
+
+mapping IoAutomaton::State::state2state() : UML::State {
+	result.name := self.name;
+}
