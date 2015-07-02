@@ -12,7 +12,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="collection" lowerBound="1"
         eType="#//BehaviourCollection" eOpposite="#//BehaviourCollection/behaviours"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mainActor" lowerBound="1"
-        eType="ecore:EClass CommonConcepts.ecore#//SystemActor"/>
+        eType="ecore:EClass CommonConcepts.ecore#//SystemActor" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="blocks" upperBound="-1"
         eType="#//Block" containment="true" eOpposite="#//Block/parentBehaviour"/>
   </eClassifiers>

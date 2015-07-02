@@ -7,29 +7,30 @@
   <foreignModel>IOAutomaton.ecore</foreignModel>
   <genPackages prefix="IoAutomaton" disposableProviderFactory="true" ecorePackage="IOAutomaton.ecore#/">
     <genClasses ecoreClass="IOAutomaton.ecore#//AutomatonCollection">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//AutomatonCollection/automatons"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//AutomatonCollection/automatons"/>
     </genClasses>
     <genClasses ecoreClass="IOAutomaton.ecore#//Automaton">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/collection"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/mainActor"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/transitions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/mainActor"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/states"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/transitions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/collection"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/startState"/>
     </genClasses>
     <genClasses ecoreClass="IOAutomaton.ecore#//State">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference IOAutomaton.ecore#//State/automaton"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//State/outgoingTransitions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//State/outgoingTransitions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//State/incomingTransitions"/>
     </genClasses>
     <genClasses ecoreClass="IOAutomaton.ecore#//Transition">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/automaton"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/preState"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/automaton"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/preState"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/operation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/outMessages"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/returnValue"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Transition/postState"/>
     </genClasses>
     <genClasses ecoreClass="IOAutomaton.ecore#//OutMessage">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//OutMessage/operation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//OutMessage/operation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//OutMessage/receiver"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//OutMessage/returnValue"/>
     </genClasses>
