@@ -42,3 +42,8 @@ Output: a state machine in UML 2.0 state machine syntax
 7. Press the `Finish` button
 
 voilà!
+
+## QVTO References
+
+* QVTo-Übersicht: http://help.eclipse.org/luna/topic/org.eclipse.m2m.qvt.oml.doc/references/M2M-QVTO.pdf
+* OCL-Übersicht: http://www.se.eecs.uni-kassel.de/fileadmin/se/courses/GT/download/GraphentechnikSS04.06.30.pdf
