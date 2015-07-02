@@ -6,31 +6,91 @@ transformation automaton2uml(in automaton : IoAutomaton, out uml : UML);
 //configuration property actors : Set(String);
 
 main() {
-	automaton.objectsOfType(Automaton)->map automaton2statemachine();
-	//Warum funktioniert das nicht?
-	//automaton.objects()[Automaton]->map automaton2statemachine();
+	var allAutomatons = automaton.objectsOfType(Automaton);
+	assert fatal (allAutomatons->mainActorsAreUnique()) with log("Unmerged automatons found");
+	allAutomatons->map automaton2statemachine();
+}
+
+query Set(Automaton)::mainActorsAreUnique() : Boolean {
+	var allActorNames = self.mainActor.name;
+	return allActorNames->asSet()->forAll(name | allActorNames->select(name2| name2 = name)->size() = 1);
 }
 
 mapping Automaton::automaton2statemachine() : UML::StateMachine {
 	name := "Statemachine for " + self.mainActor.name;
 	//create main region
-	var mainRegion = object UML::Region{};
+	var mainRegion = object UML::Region{ name := "main region" };
 	region += mainRegion;
 	//add all the stable states
-	mainRegion.subvertex += self.states->map state2state();
-	//create the init state
+	mainRegion.subvertex += self.states->map stableState();
+	//add all the submachines for the activity states
+	var activityStatesAndTransitions := self.states->map activityStates(); //Type: Bag(Tuple{states: Set(Vertex), transitions: Set(Transition)})
+	mainRegion.subvertex += activityStatesAndTransitions.umlStates;
+	mainRegion.transition += activityStatesAndTransitions.umlTransitions;
+	//create the init state and connect it to the first state
 	var initState := object UML::Pseudostate{
 		kind := PseudostateKind::initial;
-		name := 'Start';
+		name := 'Initial';
 	};
 	mainRegion.subvertex += initState;
-	//and connect it to the first state
 	mainRegion.transition += object UML::Transition {
+	    name := "init";
 		source := initState;
 		target := self.startState.resolveone().oclAsType(UML::Vertex);
 	}
 };
 
-mapping IoAutomaton::State::state2state() : UML::State {
+//generates the stable state for a IoAutomaton::State
+mapping IoAutomaton::State::stableState() : UML::State {
 	result.name := self.name;
-}
+};
+
+//generates the activity states for all the outgoing transitions,
+//wires them with the stable states and creates the substatemachines.
+//returns the newly created states and transitions.
+//These states and transitions are already wired with the surrounding stables states
+//but not added to the state machine itself.
+mapping IoAutomaton::State::activityStates() : umlStates:Set(UML::State), umlTransitions:Set(UML::Transition) {
+	init {
+		//for each possible incoming message/operation:
+		//create an activity state and wire it
+		self.outgoingTransitions.operation->flatten()->forEach(triggerOperation | true) {
+			/////////////////////////////////////////
+			//create the activity state and give it a name
+			var activityState = object UML::State {
+				name := "Evaluating " + self.name + "::" + triggerOperation.name;
+			};
+			umlStates += activityState;
+			/////////////////////////////////////////
+			//create the incoming transition
+			var incomingTransition = object UML::Transition {
+				name := self.name + " -> " + activityState.name;
+				source := self.resolveone().oclAsType(UML::Vertex);
+				target := activityState;
+				trigger := object UML::Trigger {
+					name := triggerOperation.name;
+					//NOTE: according to the standard, an event must be associated with an UML::Trigger
+					//But, this CallEvent would need an Operation and so on...
+				}
+			};
+			umlTransitions += incomingTransition;
+			/////////////////////////////////////////
+			//collect all information required for creating the substatemachine and the outgoing transition:
+		    // * collect all the transitions triggered by this message/operation
+			var relevantTransition = self.outgoingTransitions->select(t | t.operation = triggerOperation);
+			// * all the different states which are reachable in response to the execution of the activity state
+			var postStates = relevantTransition.postState->asSet();
+			/////////////////////////////////////////
+			//create the outgoing transitions
+			postStates->forEach(postState | true) {
+				umlTransitions += object UML::Transition {
+					name := activityState.name + " -> " + postState.name;
+					source := activityState;
+					target := postState.resolveone().oclAsType(UML::Vertex);
+				}
+			};
+			//TODO: use actual connection points
+			//TODO: create the submachine
+		}
+	}
+};

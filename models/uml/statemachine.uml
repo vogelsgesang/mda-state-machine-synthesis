@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <uml:StateMachine xmi:id="_ngmMACEPEeW64KQIodm-iA" name="Statemachine for atm">
+    <region xmi:id="_ngmMASEPEeW64KQIodm-iA" name="main region">
+      <transition xmi:id="_ngmMAiEPEeW64KQIodm-iA" name="WaitPassword -> Evaluating WaitPassword::cancel" source="_ngmMEyEPEeW64KQIodm-iA" target="_ngmMGCEPEeW64KQIodm-iA">
+        <trigger xmi:id="_ngmMAyEPEeW64KQIodm-iA" name="cancel"/>
+      </transition>
+      <transition xmi:id="_ngmMBCEPEeW64KQIodm-iA" name="Evaluating WaitCard::insertCard -> WaitPassword" source="_ngmMFyEPEeW64KQIodm-iA" target="_ngmMEyEPEeW64KQIodm-iA"/>
+      <transition xmi:id="_ngmMBSEPEeW64KQIodm-iA" name="WaitCard -> Evaluating WaitCard::insertCard" source="_ngmMEiEPEeW64KQIodm-iA" target="_ngmMFyEPEeW64KQIodm-iA">
+        <trigger xmi:id="_ngmMBiEPEeW64KQIodm-iA" name="insertCard"/>
+      </transition>
+      <transition xmi:id="_ngmMByEPEeW64KQIodm-iA" name="WaitTakeCard -> Evaluating WaitTakeCard::takeCard" source="_ngmMFCEPEeW64KQIodm-iA" target="_ngmMFiEPEeW64KQIodm-iA">
+        <trigger xmi:id="_ngmMCCEPEeW64KQIodm-iA" name="takeCard"/>
+      </transition>
+      <transition xmi:id="_ngmMCSEPEeW64KQIodm-iA" name="WaitPassword -> Evaluating WaitPassword::enterPassword" source="_ngmMEyEPEeW64KQIodm-iA" target="_ngmMFSEPEeW64KQIodm-iA">
+        <trigger xmi:id="_ngmMCiEPEeW64KQIodm-iA" name="enterPassword"/>
+      </transition>
+      <transition xmi:id="_ngmMCyEPEeW64KQIodm-iA" name="Evaluating WaitPassword::cancel -> WaitTakeCard" source="_ngmMGCEPEeW64KQIodm-iA" target="_ngmMFCEPEeW64KQIodm-iA"/>
+      <transition xmi:id="_ngmMDCEPEeW64KQIodm-iA" name="Evaluating WaitPassword::enterPassword -> WaitTakeCard" source="_ngmMGSEPEeW64KQIodm-iA" target="_ngmMFCEPEeW64KQIodm-iA"/>
+      <transition xmi:id="_ngmMDSEPEeW64KQIodm-iA" name="Evaluating WaitPassword::enterPassword -> WaitPassword" source="_ngmMFSEPEeW64KQIodm-iA" target="_ngmMEyEPEeW64KQIodm-iA"/>
+      <transition xmi:id="_ngmMDiEPEeW64KQIodm-iA" name="WaitPassword -> Evaluating WaitPassword::enterPassword" source="_ngmMEyEPEeW64KQIodm-iA" target="_ngmMGSEPEeW64KQIodm-iA">
+        <trigger xmi:id="_ngmMDyEPEeW64KQIodm-iA" name="enterPassword"/>
+      </transition>
+      <transition xmi:id="_ngmMECEPEeW64KQIodm-iA" name="Evaluating WaitTakeCard::takeCard -> WaitCard" source="_ngmMFiEPEeW64KQIodm-iA" target="_ngmMEiEPEeW64KQIodm-iA"/>
+      <transition xmi:id="_ngmMESEPEeW64KQIodm-iA" name="init" source="_ngmMGiEPEeW64KQIodm-iA" target="_ngmMEiEPEeW64KQIodm-iA"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ngmMEiEPEeW64KQIodm-iA" name="WaitCard"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ngmMEyEPEeW64KQIodm-iA" name="WaitPassword"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ngmMFCEPEeW64KQIodm-iA" name="WaitTakeCard"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ngmMFSEPEeW64KQIodm-iA" name="Evaluating WaitPassword::enterPassword"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ngmMFiEPEeW64KQIodm-iA" name="Evaluating WaitTakeCard::takeCard"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ngmMFyEPEeW64KQIodm-iA" name="Evaluating WaitCard::insertCard"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ngmMGCEPEeW64KQIodm-iA" name="Evaluating WaitPassword::cancel"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ngmMGSEPEeW64KQIodm-iA" name="Evaluating WaitPassword::enterPassword"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_ngmMGiEPEeW64KQIodm-iA" name="Initial"/>
+    </region>
+  </uml:StateMachine>
+  <uml:StateMachine xmi:id="_ngmMGyEPEeW64KQIodm-iA" name="Statemachine for consortium">
+    <region xmi:id="_ngmMHCEPEeW64KQIodm-iA" name="main region">
+      <transition xmi:id="_ngmMHSEPEeW64KQIodm-iA" name="WaitVerify -> Evaluating WaitVerify::verifyAccount" source="_ngmMJCEPEeW64KQIodm-iA" target="_ngmMJSEPEeW64KQIodm-iA">
+        <trigger xmi:id="_ngmMHiEPEeW64KQIodm-iA" name="verifyAccount"/>
+      </transition>
+      <transition xmi:id="_ngmMHyEPEeW64KQIodm-iA" name="Evaluating WaitVerify::verifyAccount -> WaitVerify" source="_ngmMJiEPEeW64KQIodm-iA" target="_ngmMJCEPEeW64KQIodm-iA"/>
+      <transition xmi:id="_ngmMICEPEeW64KQIodm-iA" name="Evaluating WaitVerify::verifyAccount -> WaitVerify" source="_ngmMJSEPEeW64KQIodm-iA" target="_ngmMJCEPEeW64KQIodm-iA"/>
+      <transition xmi:id="_ngmMISEPEeW64KQIodm-iA" name="WaitVerify -> Evaluating WaitVerify::verifyAccount" source="_ngmMJCEPEeW64KQIodm-iA" target="_ngmMJiEPEeW64KQIodm-iA">
+        <trigger xmi:id="_ngmMIiEPEeW64KQIodm-iA" name="verifyAccount"/>
+      </transition>
+      <transition xmi:id="_ngmMIyEPEeW64KQIodm-iA" name="init" source="_ngmMJyEPEeW64KQIodm-iA" target="_ngmMJCEPEeW64KQIodm-iA"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ngmMJCEPEeW64KQIodm-iA" name="WaitVerify"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ngmMJSEPEeW64KQIodm-iA" name="Evaluating WaitVerify::verifyAccount"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ngmMJiEPEeW64KQIodm-iA" name="Evaluating WaitVerify::verifyAccount"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_ngmMJyEPEeW64KQIodm-iA" name="Initial"/>
+    </region>
+  </uml:StateMachine>
+</xmi:XMI>
