@@ -4,8 +4,14 @@ modeltype CommonConcepts uses "urn:commonconcepts/1.0";
 
 transformation behaviourToAutomaton(in table:BehaviourModel, out diagram:IOAutomatonModel);
 
+property ioStates : Set(IOAutomatonModel::State);
+
 main() {
-	table.rootObjects()[Behaviour]->map toAutomaton();
+	table.objectsOfType(BehaviourCollection)->map toAutomatonCollection();
+}
+
+mapping BehaviourModel::BehaviourCollection::toAutomatonCollection() : IOAutomatonModel::AutomatonCollection {
+	result.automatons := self.behaviours->map toAutomaton();
 }
 
 mapping BehaviourModel::Behaviour::toAutomaton() : IOAutomatonModel::Automaton {
@@ -14,74 +20,56 @@ mapping BehaviourModel::Behaviour::toAutomaton() : IOAutomatonModel::Automaton {
 		log("Start mapping toAutomaton()");
 	}
 	
-
-	//Vorsicht mit States: Gefahr von doppeltem Mapping --> daher resolve verwenden, aber wie?
-	states := self.allSubobjectsOfType(CommonConcepts::State).oclAsType(Set(CommonConcepts::State))->map toAutomatonState(result);
-	
-	transitions := self.blocks->map toTransition(result);
-	self.blocks->map toTransition(result);
-	mainActor := self.mainActor;
+	result.transitions := self.blocks->map toTransition();
+	result.mainActor := self.mainActor.deepclone().oclAsType(CommonConcepts::SystemActor);
+	result.states := ioStates;
 	
 	//TODO: startState
-	//TODO: collection
 	
 	end {
 		log("Finished mapping toAutomaton()");		
 	}
 }
 
-mapping CommonConcepts::State::toAutomatonState(automaton : Automaton) : IOAutomatonModel::State {
-	
-	init {
-		if(automaton.states.name->includes(self.name))
-		then {
-			result := self.resolveone(s:IOAutomatonModel::State | s.name = self.name); 
-		}
-		else{
-			result.automaton := automaton;
-			result.name := self.name;
-		}
-		endif;
-	}	
-}
 
-mapping BehaviourModel::Block::toTransition(automaton : Automaton) : IOAutomatonModel::Transition {
+mapping BehaviourModel::Block::toTransition() : IOAutomatonModel::Transition {
 	
 	init {
 		log("Start mapping toStatesAndTransition()");
 	}
 	
-	
-	result.automaton := automaton;
-	
-	operation := self.inMessage.operation;
-	outMessages := self.activation.outMessages->map toOutMessage();
-	returnValue := self.activation.returnValue;
-	
-	postState := automaton.states->selectOne( s | s.name = self.postState.name );
-	
-	var state := automaton.states->selectOne( s | s.name = self.preState.name );
-	state.outgoingTransitions += Set{result};
-	preState := state;
+	result.preState := self.preState.transformState();
+	result.postState := self.postState.transformState();
 
-	
-	
-	s1.name := self.preState.name;
-	s2.name := self.postState.name;
-	s1.automaton := automaton;
-	s2.automaton := automaton;
-	s1.outgoingTransitions := s1.outgoingTransitions->union(Set{t});
-	
-	
+	result.operation := self.inMessage.operation.deepclone().oclAsType(CommonConcepts::Operation);
+	result.returnValue := self.activation.returnValue.deepclone().oclAsType(CommonConcepts::Return);
+	result.outMessages := self.activation.outMessages->map transformOutMessage();
+		
 	end {
 		log("Finished mapping toStatesAndTransition()");		
 	}
 }
 
-mapping BehaviourModel::OutMessage::toOutMessage() : IOAutomatonModel::OutMessage {
-	operation := self.operation;
-	receiver := self.receiver;
-	returnValue := self.returnValue;
+
+mapping BehaviourModel::OutMessage::transformOutMessage() : IOAutomatonModel::OutMessage {
+	operation := self.operation.deepclone().oclAsType(CommonConcepts::Operation);
+	receiver := self.receiver.deepclone().oclAsType(CommonConcepts::Actor);
+	returnValue := self.returnValue.deepclone().oclAsType(CommonConcepts::Return);
+}
+
+//transforms a State from the Behaviour model to an IOAutomaton-State
+//if the State has already been transformed before, ie. exists in the set of ioStates, use the existing one
+//else create new IOAutomaton-State
+helper CommonConcepts::State::transformState() : IOAutomatonModel::State {
+	if(ioStates.name->includes(self.name)) {
+		return self.resolveone(s : IOAutomatonModel::State | s.name = self.name);
+	}
+	else {
+		var state : IOAutomatonModel::State := object IOAutomatonModel::State {};
+		state.name := self.name;
+		ioStates += state;
+		return state;
+	};
 }
 
 
