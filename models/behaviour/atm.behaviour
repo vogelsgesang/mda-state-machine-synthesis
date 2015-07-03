@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<behaviour:BehaviourCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:behaviour="urn:behaviour/1.0" xmlns:commonconcepts="urn:commonconcepts/1.0">
+  <behaviours>
+    <mainActor name="atm"/>
+    <blocks>
+      <preState name="WaitCard"/>
+      <inMessage>
+        <operation name="insertCard"/>
+      </inMessage>
+      <activation>
+        <outMessages>
+          <operation name="requestPassword"/>
+          <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+          <returnValue value="void"/>
+        </outMessages>
+        <returnValue value="void"/>
+      </activation>
+      <postState name="WaitPassword"/>
+    </blocks>
+    <blocks>
+      <preState name="WaitPassword"/>
+      <inMessage>
+        <operation name="enterPassword"/>
+      </inMessage>
+      <activation>
+        <outMessages>
+          <operation name="verifyAccount"/>
+          <receiver xsi:type="commonconcepts:SystemActor" name="consortium"/>
+          <returnValue value="badAccount"/>
+        </outMessages>
+        <outMessages>
+          <operation name="badAccountMessage"/>
+          <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+          <returnValue value="void"/>
+        </outMessages>
+        <outMessages>
+          <operation name="printReceipt"/>
+          <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+          <returnValue value="void"/>
+        </outMessages>
+        <outMessages>
+          <operation name="ejectCard"/>
+          <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+          <returnValue value="void"/>
+        </outMessages>
+        <outMessages>
+          <operation name="requestTakeCard"/>
+          <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+          <returnValue value="void"/>
+        </outMessages>
+        <returnValue value="void"/>
+      </activation>
+      <postState name="WaitTakeCard"/>
+    </blocks>
+    <blocks>
+      <preState name="WaitTakeCard"/>
+      <inMessage>
+        <operation name="takeCard"/>
+      </inMessage>
+      <activation>
+        <outMessages>
+          <operation name="displayMainScreen"/>
+          <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+          <returnValue value="void"/>
+        </outMessages>
+        <returnValue value="void"/>
+      </activation>
+      <postState name="WaitCard"/>
+    </blocks>
+  </behaviours>
+</behaviour:BehaviourCollection>
