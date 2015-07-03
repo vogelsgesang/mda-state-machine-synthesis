@@ -4,7 +4,6 @@ modeltype CommonConcepts uses "urn:commonconcepts/1.0";
 
 transformation behaviourToAutomaton(in table:BehaviourModel, out diagram:IOAutomatonModel);
 
-property ioStates : Set(IOAutomatonModel::State);
 
 main() {
 	table.objectsOfType(BehaviourCollection)->map toAutomatonCollection();
@@ -20,9 +19,8 @@ mapping BehaviourModel::Behaviour::toAutomaton() : IOAutomatonModel::Automaton {
 		log("Start mapping toAutomaton()");
 	}
 	
-	result.transitions := self.blocks->map toTransition();
+	result.transitions := self.blocks->map toTransition(result);
 	result.mainActor := self.mainActor.deepclone().oclAsType(CommonConcepts::SystemActor);
-	result.states := ioStates;
 	
 	//TODO: startState
 	
@@ -32,21 +30,21 @@ mapping BehaviourModel::Behaviour::toAutomaton() : IOAutomatonModel::Automaton {
 }
 
 
-mapping BehaviourModel::Block::toTransition() : IOAutomatonModel::Transition {
+mapping BehaviourModel::Block::toTransition(inout automaton : IOAutomatonModel::Automaton) : IOAutomatonModel::Transition {
 	
 	init {
-		log("Start mapping toStatesAndTransition()");
+		log("Start mapping toTransition()");
 	}
 	
-	result.preState := self.preState.transformState();
-	result.postState := self.postState.transformState();
+	result.preState := self.preState.transformState(automaton);
+	result.postState := self.postState.transformState(automaton);
 
 	result.operation := self.inMessage.operation.deepclone().oclAsType(CommonConcepts::Operation);
 	result.returnValue := self.activation.returnValue.deepclone().oclAsType(CommonConcepts::Return);
 	result.outMessages := self.activation.outMessages->map transformOutMessage();
 		
 	end {
-		log("Finished mapping toStatesAndTransition()");		
+		log("Finished mapping toTransition()");		
 	}
 }
 
@@ -58,16 +56,16 @@ mapping BehaviourModel::OutMessage::transformOutMessage() : IOAutomatonModel::Ou
 }
 
 //transforms a State from the Behaviour model to an IOAutomaton-State
-//if the State has already been transformed before, ie. exists in the set of ioStates, use the existing one
+//if the State has already been transformed before, ie. exists in the automaton's set of already mapped states, use the existing one
 //else create new IOAutomaton-State
-helper CommonConcepts::State::transformState() : IOAutomatonModel::State {
-	if(ioStates.name->includes(self.name)) {
-		return self.resolveone(s : IOAutomatonModel::State | s.name = self.name);
+helper CommonConcepts::State::transformState(inout automaton : IOAutomatonModel::Automaton) : IOAutomatonModel::State {
+	if(automaton.states.name->includes(self.name)) {
+		return automaton.states->selectOne(s | s.name = self.name);
 	}
 	else {
 		var state : IOAutomatonModel::State := object IOAutomatonModel::State {};
 		state.name := self.name;
-		ioStates += state;
+		automaton.states += state;
 		return state;
 	};
 }
