@@ -1,0 +1,33 @@
+modeltype IOAutomatonModel uses "urn:io-automaton/1.0";
+modeltype CommonConcepts uses "urn:commonconcepts/1.0";
+
+transformation mergeIoAutomaton(in automatons:IOAutomatonModel, out diagram:IOAutomatonModel);
+
+main() {
+	automatons.rootObjects()[AutomatonCollection]->map merge();
+}
+
+mapping IOAutomatonModel::AutomatonCollection::merge() : IOAutomatonModel::Automaton {
+	init {
+		log("Start merge()");
+	}
+	
+	result.states := Set{};
+	result.states := self.automatons->map getStates();
+
+	
+	//TODO: relink transitions
+	
+	end {
+		log("Finished mapping toAutomaton()");		
+	}
+}
+
+mapping IOAutomatonModel::AutomatonCollection::getStates() : Set(IOAutomatonModel::State) {
+	init {
+		result := Set{};	
+		self.automatons->forEach(automaton | true) {
+			result += automaton.states.deepclone().oclAsType(IOAutomatonModel::State);
+		}
+	}	
+}
