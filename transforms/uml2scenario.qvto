@@ -9,7 +9,14 @@ property LifelineCurrentStateMap : Dict(String, String);
 
 
 main() {
-	charts.objectsOfType(Interaction)->map interaction2Scenario();
+	charts.objectsOfType(Model)->map model2ScenarioCollection();
+}
+
+mapping Model::model2ScenarioCollection() : ScenarioCollection {
+	self.packagedElement->forEach(e | e.oclIsTypeOf(Interaction)) {
+		var interaction := e.oclAsType(Interaction);
+		result.scenarios += interaction.map interaction2Scenario();
+	};
 }
 
 mapping Interaction::interaction2Scenario() : Scenario {
@@ -44,16 +51,19 @@ mapping Interaction::interaction2Scenario() : Scenario {
 				// if message is not of sort reply it must be a synchronous call
 				// if receiver of message is the user then the communication is a UserCommunication, else a SystemCommunication
 				if (mos.message.receiveEvent.isUser()) {
-					communications +=  mos.message.map message2UserCommunication(result);
+					communications +=  mos.message.map message2UserCommunication();
 				}	else {
-					communications +=  mos.message.map message2SystemCommunication(result);
+					communications +=  mos.message.map message2SystemCommunication();
 				};
 			};	
 		}	else if (f.oclIsTypeOf(StateInvariant)) {
 			var si := f.oclAsType(StateInvariant);
+			
 			si.covered->forEach(l | true) {
 				log ("Found new State for Lifeline " + l.name + ": " + si.name);
 				LifelineCurrentStateMap->put(l.name, si.name);
+				// for each communication from the lifeline to which the state belongs that has so far no post state
+				// (i.e. all messages that occured since the last state change until now) the new state is assigned as post state
 				communications->forEach(c | c.oclIsKindOf(SystemCommunication) and c.oclAsType(SystemCommunication).receivedSysCommForLifelineHasNoPostState(l)) {
 					var sysComm = c.oclAsType(SystemCommunication);
 					sysComm.postState := l.createCurrentState();
@@ -64,7 +74,7 @@ mapping Interaction::interaction2Scenario() : Scenario {
 	};
 }
 
-mapping Message::message2UserCommunication(scenario : Scenario) : UserCommunication
+mapping Message::message2UserCommunication() : UserCommunication
 when {
 	self.receiveEvent.isUser() and self.messageSort <> MessageSort::reply;
 } {
@@ -87,14 +97,11 @@ when {
 	receiver := createUserActor();
 }
 
-mapping Message::message2SystemCommunication(scenario : Scenario) : SystemCommunication
+mapping Message::message2SystemCommunication() : SystemCommunication
 when {
 	not (self.receiveEvent.isUser()) and self.messageSort <> MessageSort::reply;
 } {
 	log("Mapping Message to SystemCommunication: " + self.name);
-	
-	// set parentScenario
-	parentScenario := scenario;
 
 	// get operation from message
 	operation := self.createOperation();
@@ -175,4 +182,3 @@ query Lifeline::createCurrentState() : State {
 		name := LifelineCurrentStateMap->get(self.name);
 	};
 }
-
