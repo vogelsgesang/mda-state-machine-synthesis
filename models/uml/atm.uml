@@ -75,11 +75,11 @@
   <packagedElement xmi:type="uml:Interaction" xmi:id="_PWg4cB9gEeWOfN7QRRMe6A" name="BadPasswordInteraction">
     <lifeline xmi:type="uml:Lifeline" xmi:id="_j5wckB9sEeWOfN7QRRMe6A" name="bank" coveredBy="_h0inEB9tEeWOfN7QRRMe6A _k16tYB9tEeWOfN7QRRMe6A _YjmQACBFEeWOENsLCXvgCw _YxT74CBFEeWOENsLCXvgCw _5ZoR4CBFEeWOENsLCXvgCw"/>
     <lifeline xmi:type="uml:Lifeline" xmi:id="_tjhMIB9sEeWOfN7QRRMe6A" name="consortium" coveredBy="_YxkKsB9tEeWOfN7QRRMe6A _awptkB9tEeWOfN7QRRMe6A _PEwXACBFEeWOENsLCXvgCw _PSppECBFEeWOENsLCXvgCw _Yjlo8SBFEeWOENsLCXvgCw _5Zo48CBFEeWOENsLCXvgCw _JJSosCBGEeWOENsLCXvgCw"/>
-    <lifeline xmi:type="uml:Lifeline" xmi:id="_0AvHMB9sEeWOfN7QRRMe6A" name="atm" coveredBy="_JIlDoB9tEeWOfN7QRRMe6A _TSJUoB9tEeWOfN7QRRMe6A _WJy3MB9tEeWOfN7QRRMe6A _yflGUCBEEeWOENsLCXvgCw _yy0LYCBEEeWOENsLCXvgCw _yyzkUCBEEeWOENsLCXvgCw _PEvv8CBFEeWOENsLCXvgCw _JJSosSBGEeWOENsLCXvgCw _ROFlkCBGEeWOENsLCXvgCw _U2LtoCBGEeWOENsLCXvgCw _VBQVMSBGEeWOENsLCXvgCw _VBQVMCBGEeWOENsLCXvgCw _adKkQCBGEeWOENsLCXvgCw _dUMbwSBGEeWOENsLCXvgCw _i6EfICBGEeWOENsLCXvgCw _kpGz0CBGEeWOENsLCXvgCw _2WxIYCBGEeWOENsLCXvgCw _2kxvMCBGEeWOENsLCXvgCw _2kxIISBGEeWOENsLCXvgCw _9D-AMCBGEeWOENsLCXvgCw"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_0AvHMB9sEeWOfN7QRRMe6A" name="atm" coveredBy="_MMKJYB9tEeWOfN7QRRMe6A _JIlDoB9tEeWOfN7QRRMe6A _TSJUoB9tEeWOfN7QRRMe6A _WJy3MB9tEeWOfN7QRRMe6A _yflGUCBEEeWOENsLCXvgCw _yy0LYCBEEeWOENsLCXvgCw _yyzkUCBEEeWOENsLCXvgCw _PEvv8CBFEeWOENsLCXvgCw _JJSosSBGEeWOENsLCXvgCw _ROFlkCBGEeWOENsLCXvgCw _U2LtoCBGEeWOENsLCXvgCw _VBQVMSBGEeWOENsLCXvgCw _VBQVMCBGEeWOENsLCXvgCw _adKkQCBGEeWOENsLCXvgCw _dUMbwSBGEeWOENsLCXvgCw _i6EfICBGEeWOENsLCXvgCw _kpGz0CBGEeWOENsLCXvgCw _2WxIYCBGEeWOENsLCXvgCw _2kxvMCBGEeWOENsLCXvgCw _2kxIISBGEeWOENsLCXvgCw _9D-AMCBGEeWOENsLCXvgCw"/>
     <lifeline xmi:type="uml:Lifeline" xmi:id="_1BJbUB9sEeWOfN7QRRMe6A" name="user" coveredBy="_aCEOkCBEEeWOENsLCXvgCw _aCFcsSBEEeWOENsLCXvgCw _aCFcsCBEEeWOENsLCXvgCw _yfj4MCBEEeWOENsLCXvgCw _ROGMoCBGEeWOENsLCXvgCw _U2LGkCBGEeWOENsLCXvgCw _dUNC0CBGEeWOENsLCXvgCw _i6EfISBGEeWOENsLCXvgCw _kpGz0SBGEeWOENsLCXvgCw _2WwhUCBGEeWOENsLCXvgCw _9D-AMSBGEeWOENsLCXvgCw"/>
     <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_aCEOkCBEEeWOENsLCXvgCw" name="ActionExecSpecStart" covered="_1BJbUB9sEeWOfN7QRRMe6A" execution="_aCFcsCBEEeWOENsLCXvgCw"/>
     <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_aCFcsCBEEeWOENsLCXvgCw" name="ActionExecSpec" covered="_1BJbUB9sEeWOfN7QRRMe6A" finish="_aCFcsSBEEeWOENsLCXvgCw" start="_aCEOkCBEEeWOENsLCXvgCw"/>
-    <fragment xmi:type="uml:StateInvariant" xmi:id="_MMKJYB9tEeWOfN7QRRMe6A" name="WaitPassword"/>
+    <fragment xmi:type="uml:StateInvariant" xmi:id="_MMKJYB9tEeWOfN7QRRMe6A" name="WaitPassword" covered="_0AvHMB9sEeWOfN7QRRMe6A"/>
     <fragment xmi:type="uml:StateInvariant" xmi:id="_YxkKsB9tEeWOfN7QRRMe6A" name="WaitVerify" covered="_tjhMIB9sEeWOfN7QRRMe6A"/>
     <fragment xmi:type="uml:StateInvariant" xmi:id="_h0inEB9tEeWOfN7QRRMe6A" name="WaitBankVerify" covered="_j5wckB9sEeWOfN7QRRMe6A"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_yfj4MCBEEeWOENsLCXvgCw" name="MessageSend" covered="_1BJbUB9sEeWOfN7QRRMe6A" message="_yfiDACBEEeWOENsLCXvgCw"/>
@@ -96,8 +96,8 @@
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_JJSosCBGEeWOENsLCXvgCw" name="MessageSend3" covered="_tjhMIB9sEeWOfN7QRRMe6A" message="_JJSBoCBGEeWOENsLCXvgCw"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_JJSosSBGEeWOENsLCXvgCw" name="MessageRecv3" covered="_0AvHMB9sEeWOfN7QRRMe6A" message="_JJSBoCBGEeWOENsLCXvgCw"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_ROFlkCBGEeWOENsLCXvgCw" name="MessageSend4" covered="_0AvHMB9sEeWOfN7QRRMe6A" message="_ROE-gCBGEeWOENsLCXvgCw"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_ROGMoCBGEeWOENsLCXvgCw" name="MessageRecv4" covered="_1BJbUB9sEeWOfN7QRRMe6A" message="_ROE-gCBGEeWOENsLCXvgCw"/>
     <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_yy0LYCBEEeWOENsLCXvgCw" name="ActionExecSpec0Finish" covered="_0AvHMB9sEeWOfN7QRRMe6A" execution="_yyzkUCBEEeWOENsLCXvgCw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_ROGMoCBGEeWOENsLCXvgCw" name="MessageRecv4" covered="_1BJbUB9sEeWOfN7QRRMe6A" message="_ROE-gCBGEeWOENsLCXvgCw"/>
     <fragment xmi:type="uml:StateInvariant" xmi:id="_JIlDoB9tEeWOfN7QRRMe6A" name="WaitPassword" covered="_0AvHMB9sEeWOfN7QRRMe6A"/>
     <fragment xmi:type="uml:StateInvariant" xmi:id="_awptkB9tEeWOfN7QRRMe6A" name="WaitVerify" covered="_tjhMIB9sEeWOfN7QRRMe6A"/>
     <fragment xmi:type="uml:StateInvariant" xmi:id="_k16tYB9tEeWOfN7QRRMe6A" name="WaitBankVerify" covered="_j5wckB9sEeWOfN7QRRMe6A"/>
