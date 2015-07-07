@@ -445,7 +445,7 @@
             <children xmi:type="notation:DecorationNode" xmi:id="_MMLXgB9tEeWOfN7QRRMe6A" type="5008"/>
             <children xmi:type="notation:DecorationNode" xmi:id="_MMLXgR9tEeWOfN7QRRMe6A" type="5023"/>
             <element xmi:type="uml:StateInvariant" href="atm.uml#_MMKJYB9tEeWOfN7QRRMe6A"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_MMKwcR9tEeWOfN7QRRMe6A" x="28" y="85"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_MMKwcR9tEeWOfN7QRRMe6A" x="187" y="62"/>
           </children>
           <children xmi:type="notation:Shape" xmi:id="_TSKiwB9tEeWOfN7QRRMe6A" type="3017">
             <children xmi:type="notation:DecorationNode" xmi:id="_TSKiwh9tEeWOfN7QRRMe6A" type="5008"/>

@@ -3,116 +3,127 @@ modeltype UML uses  uml("http://www.eclipse.org/uml2/5.0.0/UML");
 modeltype ScenarioModel uses scenario("urn:scenario/1.0");
 
 
-transformation uml2table(in charts : UML, out scenarios : ScenarioModel);
+transformation uml2scenario(in charts : UML, out scenarios : ScenarioModel);
+
+property LifelineCurrentStateMap : Dict(String, String);
+
 
 main() {
-	charts.objectsOfType(Interaction)->map interaction2Scenario();
+	charts.objectsOfType(Model)->map model2ScenarioCollection();
+}
+
+mapping Model::model2ScenarioCollection() : ScenarioCollection {
+	self.packagedElement->forEach(e | e.oclIsTypeOf(Interaction)) {
+		var interaction := e.oclAsType(Interaction);
+		result.scenarios += interaction.map interaction2Scenario();
+	};
 }
 
 mapping Interaction::interaction2Scenario() : Scenario {
-	log('Mapping Interaction to Scenario: ', self);
+	LifelineCurrentStateMap->clear();
+
+	log("****************************************");
+	log("Mapping Interaction to Scenario: " + self.name);
+
+	self.fragment->forEach(f | true) {
+		//log(f.repr());
+		if (f.oclIsTypeOf(MessageOccurrenceSpecification)) {
+			var mos := f.oclAsType(MessageOccurrenceSpecification);
+			//log(mos.message.name);
+		}	else if (f.oclIsTypeOf(ExecutionOccurrenceSpecification)) {
+			var eos := f.oclAsType(ExecutionOccurrenceSpecification);
+			//log(eos.execution.start.getCovered().name);
+		};
+	};
 	
 	// fetch all fragments that are of type MessageOccurrenceSpecification and fulfill the isSend() predicate
-	self.fragment->forEach(f | f.oclIsTypeOf(MessageOccurrenceSpecification) and f.oclAsType(MessageOccurrenceSpecification).isSend()) {
-		var mos := f.oclAsType(MessageOccurrenceSpecification);
-		
-		if (mos.message.messageSort = MessageSort::reply) {
-			// if message held by the MessageOccurrenceSpecification is of sort reply then fetch the last communication that has no reply and map the reply message to it
-			var lastCommWOReply : SystemCommunication := communications->select(c | c.oclIsTypeOf(SystemCommunication) and c.oclAsType(SystemCommunication).returnValue.value = "void")->last().oclAsType(SystemCommunication);
-			lastCommWOReply.returnValue.value := mos.message.name;
-		}	else {
-			// if message is not of sort reply it must be a synchronous call
-			// if receiver of message is the user then the communication is a UserCommunication, else a SystemCommunication
-			if (mos.message.receiveEvent.isUser()) {
-				communications +=  mos.message.map message2UserCommunication(result);
+	self.fragment->forEach(f | (f.oclIsTypeOf(MessageOccurrenceSpecification) and f.oclAsType(MessageOccurrenceSpecification).isSend()) or (f.oclIsTypeOf(StateInvariant))) {
+		if (f.oclIsTypeOf(MessageOccurrenceSpecification)) {
+			var mos := f.oclAsType(MessageOccurrenceSpecification);
+			
+			if (mos.message.messageSort = MessageSort::reply) {
+				log("Found Message with MessageSort reply: " + mos.message.name);
+				// if message held by the MessageOccurrenceSpecification is of sort reply then fetch the last communication that can be the request to this reply and map the reply message to it
+				var lastCommFromRecToSend : SystemCommunication := communications->select(c | c.oclIsTypeOf(SystemCommunication) and c.oclAsType(SystemCommunication).sysCommCanBeRequestForReply(mos.message))->last().oclAsType(SystemCommunication);
+				lastCommFromRecToSend.returnValue.value := mos.message.name;
+				log("Map it as Return to SystemCommunication: " + lastCommFromRecToSend.operation.name);
 			}	else {
-				communications +=  mos.message.map message2SystemCommunication(result);
+				// if message is not of sort reply it must be a synchronous call
+				// if receiver of message is the user then the communication is a UserCommunication, else a SystemCommunication
+				if (mos.message.receiveEvent.isUser()) {
+					communications +=  mos.message.map message2UserCommunication();
+				}	else {
+					communications +=  mos.message.map message2SystemCommunication();
+				};
+			};	
+		}	else if (f.oclIsTypeOf(StateInvariant)) {
+			var si := f.oclAsType(StateInvariant);
+			
+			si.covered->forEach(l | true) {
+				log ("Found new State for Lifeline " + l.name + ": " + si.name);
+				LifelineCurrentStateMap->put(l.name, si.name);
+				// for each communication from the lifeline to which the state belongs that has so far no post state
+				// (i.e. all messages that occured since the last state change until now) the new state is assigned as post state
+				communications->forEach(c | c.oclIsKindOf(SystemCommunication) and c.oclAsType(SystemCommunication).receivedSysCommForLifelineHasNoPostState(l)) {
+					var sysComm = c.oclAsType(SystemCommunication);
+					sysComm.postState := l.createCurrentState();
+					log("Map it as PostState to SystemCommunication: " + sysComm.operation.name);
+				};
 			};
-		};	
+		};
 	};
 }
 
-mapping Message::message2UserCommunication(scenario : Scenario) : UserCommunication
+mapping Message::message2UserCommunication() : UserCommunication
 when {
 	self.receiveEvent.isUser() and self.messageSort <> MessageSort::reply;
 } {
-	log('Mapping Message to UserCommunication: ', self);
-	
-	// set parentScenario
-	parentScenario := scenario;
-	
+	log("Mapping Message to UserCommunication: " + self.name);
+		
 	// get operation from message
-	operation := self.map message2Operation();
-	
+	operation := self.createOperation();
+
 	// set "void" as returnValue
-	returnValue := self.map message2ReturnVoid();
+	returnValue := createVoidReturn();
 	
 	if (self.sendEvent.isUser()) {
 		// if message is sent by user then set "user" as sender
-		sender := self.sendEvent.map messageEnd2UserActor();
+		sender := createUserActor();
 	}	else {
 		// if not then set the corresponding sender
-		sender := self.sendEvent.map messageEnd2SystemActor();
+		sender := self.sendEvent.createSystemActor();
 	};
 	// set "user" as receiver
-	receiver := self.receiveEvent.map messageEnd2UserActor();
+	receiver := createUserActor();
 }
 
-mapping Message::message2SystemCommunication(scenario : Scenario) : SystemCommunication
+mapping Message::message2SystemCommunication() : SystemCommunication
 when {
 	not (self.receiveEvent.isUser()) and self.messageSort <> MessageSort::reply;
 } {
-	log('Mapping Message to SystemCommunication: ', self);
-	
-	// set parentScenario
-	parentScenario := scenario;
+	log("Mapping Message to SystemCommunication: " + self.name);
 
 	// get operation from message
-	operation := self.map message2Operation();
+	operation := self.createOperation();
 	
 	// set "void" as returnValue
-	returnValue := self.map message2ReturnVoid();
+	returnValue := createVoidReturn();
 	
 	if (self.sendEvent.isUser()) {
 		// if message is sent by user then set "user" as sender
-		sender := self.sendEvent.map messageEnd2UserActor();
+		sender := createUserActor();
 	}	else {
 		// if not then set the corresponding sender
-		sender := self.sendEvent.map messageEnd2SystemActor();
+		sender := self.sendEvent.createSystemActor();
 	};
 	// set receiver from messageEnd
-	receiver := self.receiveEvent.map messageEnd2SystemActor();
+	receiver := self.receiveEvent.createSystemActor();
 	
-}
-
-mapping MessageEnd::messageEnd2SystemActor() : SystemActor
-when {
-	not (self.isUser());
-}	{
-	log("Mapping MessageEnd to SystemActor", self);
-	
-	name := self.getLifeline().name;
-}
-	
-mapping MessageEnd::messageEnd2UserActor() : UserActor
-when {
-	self.isUser();
-}	{
-	log("Mapping MessageEnd to UserActor", self);
-	
-	name := "user";
-}
-
-mapping Message::message2ReturnVoid() : Return {
-	value := "void";
-}
-
-mapping Message::message2Operation() : Operation {
-	name := self.name;
+	preState := self.receiveEvent.getLifeline().createCurrentState();
 }
 
 
-// helper queries
+// helpers
 
 query MessageEnd::getLifeline() : Lifeline {
 	var mos := self.oclAsType(MessageOccurrenceSpecification);
@@ -125,4 +136,49 @@ query MessageEnd::isUser() : Boolean {
 
 query String::isUser() : Boolean {
 	return self = "User" or self = "user"
+}
+
+query SystemCommunication::sysCommCanBeRequestForReply(reply : Message) : Boolean {
+	var hasNoReturnValue := self.returnValue.value = "void";
+	var requestReceiverIsReplySender := self.receiver.name = reply.sendEvent.getLifeline().name;
+	var requestSenderIsReplyReceiver := self.sender.name = reply.receiveEvent.getLifeline().name;
+	
+	return hasNoReturnValue and requestSenderIsReplyReceiver and requestReceiverIsReplySender;
+}
+
+query SystemCommunication::receivedSysCommForLifelineHasNoPostState(line : Lifeline) : Boolean {
+	var hasNoPostState := self.postState = null;
+	var receiverIsLifeline := self.receiver.name = line.name;
+
+	return hasNoPostState and receiverIsLifeline;
+}
+
+query Message::createOperation() : Operation {
+	return object Operation {
+		name := self.name;
+	};
+}
+
+query createVoidReturn() : Return {
+	return object Return {
+		value := "void";
+	};
+}
+
+query createUserActor() : UserActor {
+	return object UserActor {
+		name := "user";
+	};
+}
+
+query MessageEnd::createSystemActor() : SystemActor {
+	return object SystemActor {
+		name := self.getLifeline().name;
+	};
+}
+
+query Lifeline::createCurrentState() : State {
+	return object State {
+		name := LifelineCurrentStateMap->get(self.name);
+	};
 }
