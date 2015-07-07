@@ -32,17 +32,22 @@ helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
 	var uniqueStates : Set(IoAutomaton::State) := Set{};
 	self->forEach(automaton | true) {
 		automaton.states->forEach(state | not uniqueStates->isStateContained(state)) {
-			uniqueStates += state.deepclone().oclAsType(IoAutomaton::State);
+			var uniqueState := state.deepclone().oclAsType(IoAutomaton::State);
+			log("Add unique state " + uniqueState.name);
+			uniqueStates += uniqueState;
 		};
 	};
 	
 	var uniqueTransitions : Set(Transition) := Set{};
 	self->forEach(automaton | true) {
 		automaton.transitions->forEach(transition | not uniqueTransitions->isTransitionContained(transition)) {
-			uniqueTransitions += transition.deepclone().oclAsType(Transition);
+			var uniqueTransition := transition.deepclone().oclAsType(Transition);
+			uniqueTransition.preState := uniqueStates->getState(transition.preState.name);
+			uniqueTransition.postState := uniqueStates->getState(transition.postState.name);
+			log("Add unique transition " + uniqueTransition.preState.name + " -> " + uniqueTransition.postState.name);
+			uniqueTransitions += uniqueTransition;
 		};
 	};
-	
 	
 	var automaton := object IoAutomaton::Automaton{};
 	automaton.states := uniqueStates;
@@ -51,9 +56,17 @@ helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
 	return automaton;
 }
 
+query Set(IoAutomaton::State)::getState(stateName : String) : IoAutomaton::State {
+	self->forEach(setState | setState.name = stateName) {
+		return setState;
+	};
+	assert fatal (true) with log("No state with name " + stateName + " found");
+	return null;
+}
+
 query Set(IoAutomaton::State)::isStateContained(state : IoAutomaton::State) : Boolean {
 	var stateName = state.name;
-	return self->forAll(setState | setState.name = stateName);
+	return self->exists(setState | setState.name = stateName);
 }
 
 query Set(IoAutomaton::Transition)::isTransitionContained(transition : IoAutomaton::Transition) : Boolean {
@@ -64,6 +77,9 @@ query Set(IoAutomaton::Transition)::isTransitionContained(transition : IoAutomat
 					and setTransition.postState.name = transition.postState.name) {
 		// operation, pre and post equal
 		// now check the outMessages
+		if(not (outMessages->size() = setTransition.outMessages->size())) {
+			return false;
+		};
 		var outProduct := outMessages->product(setTransition.outMessages);
 		var equalCount := 0;
 		outProduct->forEach(outProdTuple | true) {
