@@ -2,21 +2,17 @@ modeltype CommonConcepts uses commonconcepts("urn:commonconcepts/1.0");
 modeltype UML uses  uml("http://www.eclipse.org/uml2/5.0.0/UML");
 modeltype ScenarioModel uses scenario("urn:scenario/1.0");
 
-
 transformation uml2scenario(in charts : UML, out scenarios : ScenarioModel);
 
 property LifelineCurrentStateMap : Dict(String, String);
-
 
 main() {
 	charts.objectsOfType(Model)->map model2ScenarioCollection();
 }
 
 mapping Model::model2ScenarioCollection() : ScenarioCollection {
-	self.packagedElement->forEach(e | e.oclIsTypeOf(Interaction)) {
-		var interaction := e.oclAsType(Interaction);
-		result.scenarios += interaction.map interaction2Scenario();
-	};
+	// get all interactions and map them to scenarios
+	result.scenarios += self.packagedElement->selectByType(Interaction)->map interaction2Scenario();	
 }
 
 mapping Interaction::interaction2Scenario() : Scenario {
@@ -24,17 +20,6 @@ mapping Interaction::interaction2Scenario() : Scenario {
 
 	log("****************************************");
 	log("Mapping Interaction to Scenario: " + self.name);
-
-	self.fragment->forEach(f | true) {
-		//log(f.repr());
-		if (f.oclIsTypeOf(MessageOccurrenceSpecification)) {
-			var mos := f.oclAsType(MessageOccurrenceSpecification);
-			//log(mos.message.name);
-		}	else if (f.oclIsTypeOf(ExecutionOccurrenceSpecification)) {
-			var eos := f.oclAsType(ExecutionOccurrenceSpecification);
-			//log(eos.execution.start.getCovered().name);
-		};
-	};
 	
 	// fetch all fragments that are of type MessageOccurrenceSpecification and fulfill the isSend() predicate
 	self.fragment->forEach(f | (f.oclIsTypeOf(MessageOccurrenceSpecification) and f.oclAsType(MessageOccurrenceSpecification).isSend()) or (f.oclIsTypeOf(StateInvariant))) {
