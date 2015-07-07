@@ -1,22 +1,22 @@
-modeltype IOAutomatonModel uses "urn:io-automaton/1.0";
 modeltype CommonConcepts uses "urn:commonconcepts/1.0";
+modeltype IoAutomaton uses "urn:io-automaton/1.0";
 
-transformation mergeIoAutomaton(in automatons:IOAutomatonModel, out diagram:IOAutomatonModel);
+transformation mergeIoAutomaton(in automatons:IoAutomaton, out diagram:IoAutomaton);
 
 main() {
-	automatons.rootObjects()[AutomatonCollection]->map merge();
+	automatons.rootObjects()[IoAutomaton::AutomatonCollection]->map merge();
 }
 
-mapping IOAutomatonModel::AutomatonCollection::merge() : IOAutomatonModel::Automaton {
+mapping IoAutomaton::AutomatonCollection::merge() : IoAutomaton::Automaton {
 	init {
 		log("Start merge()");
 	}
 	
 	var mainActorNames := self.automatons.mainActor.name->asSet();
-	var automatonsResult := object AutomatonCollection{};
+	var automatonsResult := object IoAutomaton::AutomatonCollection{};
 	mainActorNames->forEach(mainActorName | true) {
 		var automatonsForActor := self.automatons->select(automaton | automaton.mainActor.name = mainActorName);
-		var mergedAutomaton := automatonsForActor.mergeStatesAndTransitions();
+		var mergedAutomaton := automatonsForActor->mergeStatesAndTransitions();
 		var mainActor := object SystemActor{};
 		mainActor.name := mainActorName;
 		mergedAutomaton.mainActor := mainActor;
@@ -28,53 +28,35 @@ mapping IOAutomatonModel::AutomatonCollection::merge() : IOAutomatonModel::Autom
 	}
 }
 
-mapping IOAutomatonModel::AutomatonCollection::getStates() : Set(IOAutomatonModel::State) {
-	init {
-		result := Set{};	
-		self.automatons->forEach(automaton | true) {
-			result += automaton.states.deepclone().oclAsType(IOAutomatonModel::State);
-		}
-	}	
-}
-
-mapping IOAutomatonModel::AutomatonCollection::getTransitions() : Set(IOAutomatonModel::Transition) {
-	init {
-		result := Set{};
-		self.automatons->forEach(automaton | true) {
-			result += automaton.transitions.deepclone().oclAsType(IOAutomatonModel::Transition);
-		}
-	}	
-}
-
-helper Set(Automaton)::mergeStatesAndTransitions() : Automaton {
-	var uniqueStates : Set(State) := Set{};
+helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
+	var uniqueStates : Set(IoAutomaton::State) := Set{};
 	self->forEach(automaton | true) {
-		automaton.states->forEach(state | not uniqueStates.isStateContained(state)) {
-			uniqueStates += state.deepclone().oclAsType(State);
+		automaton.states->forEach(state | not uniqueStates->isStateContained(state)) {
+			uniqueStates += state.deepclone().oclAsType(IoAutomaton::State);
 		};
 	};
 	
 	var uniqueTransitions : Set(Transition) := Set{};
 	self->forEach(automaton | true) {
-		automaton.transitions->forEach(transition | not uniqueTransitions.isTransitionContained(transition)) {
+		automaton.transitions->forEach(transition | not uniqueTransitions->isTransitionContained(transition)) {
 			uniqueTransitions += transition.deepclone().oclAsType(Transition);
 		};
 	};
 	
 	
-	var automaton := object Automaton{};
+	var automaton := object IoAutomaton::Automaton{};
 	automaton.states := uniqueStates;
 	automaton.transitions := uniqueTransitions;
-	automaton.startState := self->first().oclAsType(Automaton).startState;
+	automaton.startState := self->asSequence()->first().oclAsType(Automaton).startState;
 	return automaton;
 }
 
-query Set(State)::isStateContained(state : State) : Boolean {
+query Set(IoAutomaton::State)::isStateContained(state : IoAutomaton::State) : Boolean {
 	var stateName = state.name;
 	return self->forAll(setState | setState.name = stateName);
 }
 
-query Set(Transition)::isTransitionContained(transition : Transition) : Boolean {
+query Set(IoAutomaton::Transition)::isTransitionContained(transition : IoAutomaton::Transition) : Boolean {
 	var outMessages := transition.outMessages;
 	self->forEach(setTransition 
 					| setTransition.operation.name = transition.operation.name
