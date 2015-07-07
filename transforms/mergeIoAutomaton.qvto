@@ -12,17 +12,19 @@ mapping IOAutomatonModel::AutomatonCollection::merge() : IOAutomatonModel::Autom
 		log("Start merge()");
 	}
 	
-	result.states := Set{};
 	var mainActorNames := self.automatons.mainActor.name->asSet();
 	var automatonsResult := object AutomatonCollection{};
 	mainActorNames->forEach(mainActorName | true) {
-		var allAutomatons := self.automatons->select(automaton | automaton.mainActor.name = mainActorName);
-		var mergedAutomaton := allAutomatons.mergeAutomatons();
+		var automatonsForActor := self.automatons->select(automaton | automaton.mainActor.name = mainActorName);
+		var mergedAutomaton := automatonsForActor.mergeStatesAndTransitions();
+		var mainActor := object SystemActor{};
+		mainActor.name := mainActorName;
+		mergedAutomaton.mainActor := mainActor;
 		automatonsResult.automatons += mergedAutomaton;
 	}
 	
 	end {
-		log("Finished mapping toAutomaton()");		
+		log("Finished automatons merge()");		
 	}
 }
 
@@ -37,13 +39,32 @@ mapping IOAutomatonModel::AutomatonCollection::getStates() : Set(IOAutomatonMode
 
 mapping IOAutomatonModel::AutomatonCollection::getTransitions() : Set(IOAutomatonModel::Transition) {
 	init {
-		result := Set{};	
+		result := Set{};
 		self.automatons->forEach(automaton | true) {
 			result += automaton.transitions.deepclone().oclAsType(IOAutomatonModel::Transition);
 		}
 	}	
 }
 
-helper Set(IOAutomatonModel::Automaton)::merge() : Automaton {
+helper Set(Automaton)::mergeStatesAndTransitions() : Automaton {
+	var uniqueStates : Set(State) := Set{};
+	self->forEach(automaton | true) {
+		automaton.states->forEach(state | not uniqueStates.isStateContained(state)) {
+			uniqueStates += state.deepclone().oclAsType(State);
+		};
+	};
 	
+	var transitions : Set(Transition) := Set{};
+	
+	
+	var automaton := object Automaton{};
+	automaton.states := uniqueStates;
+	automaton.transitions := transitions;
+	automaton.startState := self->first().oclAsType(Automaton).startState;
+	return automaton;
+}
+
+query Set(State)::isStateContained(state : State) : Boolean {
+	var stateName = state.name;
+	return self->forAll(setState | setState.name = stateName);
 }
