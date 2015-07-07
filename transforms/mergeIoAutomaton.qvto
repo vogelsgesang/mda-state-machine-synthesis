@@ -29,6 +29,8 @@ mapping IoAutomaton::AutomatonCollection::merge() : IoAutomaton::Automaton {
 }
 
 helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
+	var mergedAutomaton := object IoAutomaton::Automaton{};
+	
 	var uniqueStates : Set(IoAutomaton::State) := Set{};
 	self->forEach(automaton | true) {
 		automaton.states->forEach(state | not uniqueStates->isStateContained(state)) {
@@ -36,6 +38,7 @@ helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
 			log("Add unique state " + uniqueState.name);
 			uniqueStates += uniqueState;
 		};
+		mergedAutomaton.startState := automaton.startState;
 	};
 	
 	var uniqueTransitions : Set(Transition) := Set{};
@@ -49,11 +52,10 @@ helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
 		};
 	};
 	
-	var automaton := object IoAutomaton::Automaton{};
-	automaton.states := uniqueStates;
-	automaton.transitions := uniqueTransitions;
-	automaton.startState := self->asSequence()->first().oclAsType(Automaton).startState;
-	return automaton;
+	mergedAutomaton.states := uniqueStates;
+	mergedAutomaton.transitions := uniqueTransitions;
+	mergedAutomaton.startState := self->asSequence()->first().oclAsType(Automaton).startState;
+	return mergedAutomaton;
 }
 
 query Set(IoAutomaton::State)::getState(stateName : String) : IoAutomaton::State {
