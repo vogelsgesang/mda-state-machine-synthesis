@@ -54,12 +54,17 @@ helper Set(Automaton)::mergeStatesAndTransitions() : Automaton {
 		};
 	};
 	
-	var transitions : Set(Transition) := Set{};
+	var uniqueTransitions : Set(Transition) := Set{};
+	self->forEach(automaton | true) {
+		automaton.transitions->forEach(transition | not uniqueTransitions.isTransitionContained(transition)) {
+			uniqueTransitions += transition.deepclone().oclAsType(Transition);
+		};
+	};
 	
 	
 	var automaton := object Automaton{};
 	automaton.states := uniqueStates;
-	automaton.transitions := transitions;
+	automaton.transitions := uniqueTransitions;
 	automaton.startState := self->first().oclAsType(Automaton).startState;
 	return automaton;
 }
@@ -67,4 +72,30 @@ helper Set(Automaton)::mergeStatesAndTransitions() : Automaton {
 query Set(State)::isStateContained(state : State) : Boolean {
 	var stateName = state.name;
 	return self->forAll(setState | setState.name = stateName);
+}
+
+query Set(Transition)::isTransitionContained(transition : Transition) : Boolean {
+	var outMessages := transition.outMessages;
+	self->forEach(setTransition 
+					| setTransition.operation.name = transition.operation.name
+					and setTransition.preState.name = transition.preState.name
+					and setTransition.postState.name = transition.postState.name) {
+		// operation, pre and post equal
+		// now check the outMessages
+		var outProduct := outMessages->product(setTransition.outMessages);
+		var equalCount := 0;
+		outProduct->forEach(outProdTuple | true) {
+			var first := outProdTuple.first;
+			var second := outProdTuple.second;
+			if (first.operation.name = second.operation.name
+					and first.receiver.name = second.receiver.name
+					and first.returnValue.value = second.returnValue.value) {
+				equalCount := equalCount + 1;
+			}
+		};
+		if(equalCount = outMessages->size()) {
+			return true;
+		}
+	};
+	return false;
 }
