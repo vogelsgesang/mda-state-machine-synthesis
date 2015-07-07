@@ -13,10 +13,13 @@ mapping IOAutomatonModel::AutomatonCollection::merge() : IOAutomatonModel::Autom
 	}
 	
 	result.states := Set{};
-	result.states := self.automatons->map getStates();
-
-	
-	//TODO: relink transitions
+	var mainActorNames := self.automatons.mainActor.name->asSet();
+	var automatonsResult := object AutomatonCollection{};
+	mainActorNames->forEach(mainActorName | true) {
+		var allAutomatons := self.automatons->select(automaton | automaton.mainActor.name = mainActorName);
+		var mergedAutomaton := allAutomatons.mergeAutomatons();
+		automatonsResult.automatons += mergedAutomaton;
+	}
 	
 	end {
 		log("Finished mapping toAutomaton()");		
@@ -30,4 +33,17 @@ mapping IOAutomatonModel::AutomatonCollection::getStates() : Set(IOAutomatonMode
 			result += automaton.states.deepclone().oclAsType(IOAutomatonModel::State);
 		}
 	}	
+}
+
+mapping IOAutomatonModel::AutomatonCollection::getTransitions() : Set(IOAutomatonModel::Transition) {
+	init {
+		result := Set{};	
+		self.automatons->forEach(automaton | true) {
+			result += automaton.transitions.deepclone().oclAsType(IOAutomatonModel::Transition);
+		}
+	}	
+}
+
+helper Set(IOAutomatonModel::Automaton)::merge() : Automaton {
+	
 }
