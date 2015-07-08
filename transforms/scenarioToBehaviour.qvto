@@ -8,7 +8,7 @@ property alreadyMappedActors : Set(SystemActor);
 
 
 main() {
-	var zumTesten := sTable.objectsOfType(Scenario);
+
 	sTable.objectsOfType(ScenarioCollection)->map toBehaviourCollection();
 }
 
@@ -40,10 +40,16 @@ mapping ScenarioModel::Scenario::toBehaviourCollectionPerScenario() : BehaviourM
 	sysActors -> forEach (sysActor) {
 		if(not alreadyMappedActors->exists(mActor | mActor.name = sysActor.name)){
 			alreadyMappedActors += sysActor;
-			
+			// ############### everything fine:
+			// all communications have proper sender and receiver actors
 			var actorBehaviour : Behaviour := object Behaviour{
-				mainActor := sysActor;
+				//mainActor := sysActor;
 			};
+			actorBehaviour.mainActor := sysActor.deepclone().oclAsType(SystemActor);
+			// ############### error has happened: (FIXED NOW by using deepclone)
+			// now in the input scenario: one communication has a "null"-actor
+			// it is indeterministic which communication it is (probably cause sysActors Set has indeterministic order)
+			// we assume it is the communication where our current sysActor comes from
 			
 			// map only communication where actor is involved
 			var commSetForActor := self.communications->getCommunicationSetForActor(sysActor);
