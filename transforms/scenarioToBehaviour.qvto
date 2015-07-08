@@ -1,0 +1,137 @@
+modeltype BehaviourModel uses "urn:behaviour/1.0";
+modeltype ScenarioModel uses "urn:scenario/1.0";
+modeltype CommonConcepts uses "urn:commonconcepts/1.0";
+
+transformation scenarioToBehaviour(in sTable:ScenarioModel, out bTable:BehaviourModel);
+
+property alreadyMappedActors : Set(SystemActor);
+
+
+main() {
+	var zumTesten := sTable.objectsOfType(Scenario);
+	sTable.objectsOfType(ScenarioCollection)->map toBehaviourCollection();
+}
+
+mapping ScenarioModel::ScenarioCollection::toBehaviourCollection() : BehaviourCollection {
+	// one behaviour collection for each scenario
+	var setOfBehaviourCollections := self.scenarios->map toBehaviourCollectionPerScenario();
+	
+	var flattenedSetOfBehaviours : Set(Behaviour);
+	
+	setOfBehaviourCollections->forEach(bc){
+		flattenedSetOfBehaviours := flattenedSetOfBehaviours->union(bc.behaviours);
+	};
+	//flattenedSetOfBehaviours := setOfBehaviourCollections->collect(bc | flattenedSetOfBehaviours->union(bc.behaviours));
+	
+	result.behaviours := flattenedSetOfBehaviours;
+	
+	//result.behaviours := self.scenarios->map toBehaviourCollectionPerScenario()->collect(bc | result.behaviours->union(bc.behaviours));
+}
+
+// maps a scenario to a collection of behaviours (one behaviour per system actor)
+mapping ScenarioModel::Scenario::toBehaviourCollectionPerScenario() : BehaviourModel::BehaviourCollection {
+	
+	// for every scenario there are new actors
+	alreadyMappedActors := Set{};
+	// all system actors in scenario
+	var sysActors : Set(SystemActor) := self.allSubobjectsOfType(SystemActor).oclAsType(SystemActor)->asSet();
+
+	// for each system actor, which is not yet mapped, create new behaviour
+	sysActors -> forEach (sysActor) {
+		if(not alreadyMappedActors->exists(mActor | mActor.name = sysActor.name)){
+			alreadyMappedActors += sysActor;
+			
+			var actorBehaviour : Behaviour := object Behaviour{
+				mainActor := sysActor;
+			};
+			
+			// map only communication where actor is involved
+			var commSetForActor := self.communications->getCommunicationSetForActor(sysActor);
+			actorBehaviour.blocks := commSetForActor->map toBlocks(sysActor);
+			result.behaviours += actorBehaviour;
+		};
+	};
+}
+	
+// maps all communications for system actor "actor" to blocks of behaviour 
+mapping OrderedSet(ScenarioModel::Communication)::toBlocks(actor : SystemActor) : OrderedSet(Block) {
+	
+	// for each communication:
+	// map communication to a new block if receiver = actor
+	// map communication to outmessage if sender = actor
+	self->forEach(communication) {
+		var block : Block;
+	
+		if(communication.oclIsKindOf(SystemCommunication)){
+			var sysComm := communication.oclAsType(SystemCommunication);
+			
+			// append new block with preState, postState, InMessage, returnValue
+			if(sysComm.receiver.name = actor.name){
+				block := object Block{
+					preState := sysComm.preState.deepclone().oclAsType(State);
+					postState := sysComm.postState.deepclone().oclAsType(State);
+				};
+				block.inMessage := object InMessage{
+					operation := sysComm.operation.deepclone().oclAsType(Operation);
+				};
+				block.activation.returnValue := sysComm.returnValue.deepclone().oclAsType(Return);
+				result -> append(block);
+				
+			// add outMessage to last block
+			} else if(sysComm.sender.name = actor.name){
+				block := result -> last();
+				block.activation.outMessages += sysComm.map sysCommToOutMessage();
+			}
+			
+		// add outMessage to last block
+		} else if(communication.oclIsKindOf(UserCommunication)){
+			var userComm := communication.oclAsType(UserCommunication);
+			
+			block := result -> last();
+			block.activation.outMessages += userComm.map userCommToOutMessage();
+		};
+	};
+}
+
+// map operation, receiver and returnValue of SystemCommunication to OutMessage
+mapping SystemCommunication::sysCommToOutMessage() : OutMessage {
+	
+	result.operation := self.operation.deepclone().oclAsType(Operation);
+	result.receiver := self.receiver.deepclone().oclAsType(Actor);
+	result.returnValue := self.returnValue.deepclone().oclAsType(Return);
+	
+}
+
+// map operation, receiver and returnValue of UserCommunication to OutMessage
+mapping UserCommunication::userCommToOutMessage() : OutMessage {
+	
+	result.operation := self.operation.deepclone().oclAsType(Operation);
+	result.receiver := self.receiver.deepclone().oclAsType(Actor);
+	result.returnValue := self.returnValue.deepclone().oclAsType(Return);
+	
+}
+
+
+
+//projects communications on actor and returns all communications where actor is involved either as sender or receiver
+helper OrderedSet(Communication)::getCommunicationSetForActor(actor : SystemActor) : OrderedSet(Communication) {
+	
+	var returnSet : OrderedSet(Communication);
+	
+	self->forEach(communication) {
+	
+		if(communication.oclIsKindOf(UserCommunication)){
+			if(communication.oclAsType(UserCommunication).sender.name = actor.name) {
+				returnSet += communication;
+			}
+			
+		} else if(communication.oclIsKindOf(SystemCommunication)){
+			var syscom := communication.oclAsType(SystemCommunication);
+			if(syscom.sender.name = actor.name or syscom.receiver.name = actor.name){
+				returnSet += communication;
+			}
+		}
+	};
+	
+	return returnSet;
+}
