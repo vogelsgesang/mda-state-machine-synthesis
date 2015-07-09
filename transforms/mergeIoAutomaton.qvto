@@ -62,11 +62,13 @@ helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
 		uniqueState.incomingTransitions->forEach(transition | true) {
 			reassignedIncomingTransitions += uniqueTransitions->getTransition(transition.preState, transition.postState);
 		};
+		uniqueState.incomingTransitions := reassignedIncomingTransitions;
 		
 		var reassignedOutgoingTransitions : Set(Transition) := Set{};
 		uniqueState.outgoingTransitions->forEach(transition | true) {
 			reassignedOutgoingTransitions += uniqueTransitions->getTransition(transition.preState, transition.postState);
 		};
+		uniqueState.outgoingTransitions := reassignedOutgoingTransitions;
 	};
 	
 	mergedAutomaton.states := uniqueStates;
