@@ -59,15 +59,20 @@ mapping BehaviourModel::OutMessage::transformOutMessage() : IOAutomatonModel::Ou
 //if the State has already been transformed before, ie. exists in the automaton's set of already mapped states, use the existing one
 //else create new IOAutomaton-State
 helper CommonConcepts::State::transformState(inout automaton : IOAutomatonModel::Automaton) : IOAutomatonModel::State {
+	
+	var returnState : IOAutomatonModel::State;
+	
 	if(automaton.states.name->includes(self.name)) {
-		return automaton.states->selectOne(s | s.name = self.name);
+		returnState := automaton.states->selectOne(s | s.name = self.name);
 	}
 	else {
 		var state : IOAutomatonModel::State := object IOAutomatonModel::State {};
 		state.name := self.name;
 		automaton.states += state;
-		return state;
+		returnState := state;
 	};
+	
+	return returnState;
 }
 
 
