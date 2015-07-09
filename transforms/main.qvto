@@ -19,13 +19,13 @@ transformation sequenceToState(
 	access transformation automaton2uml(in IoAutomaton, out UML);
 
 main() {
-	var scenarios : ScenarioModel;
+	var scenarios : ScenarioModel := ScenarioModel.createEmptyModel().oclAsType(ScenarioModel);
 	var umlToScenario := new uml2scenario(sequence, scenarios);
-	var behaviours : BehaviourModel;
+	var behaviours : BehaviourModel := BehaviourModel.createEmptyModel().oclAsType(BehaviourModel);
 	var scenario2Behaviour := new scenarioToBehaviour(scenarios, behaviours);
-	var automatons : IoAutomaton;
+	var automatons : IoAutomaton := IoAutomaton.createEmptyModel().oclAsType(IoAutomaton);
 	var behaviour2Automaton := new behaviourToAutomaton(behaviours, automatons);
-	var mergedAutomatons : IoAutomaton;
+	var mergedAutomatons : IoAutomaton := IoAutomaton.createEmptyModel().oclAsType(IoAutomaton);
 	var mergeAutomatons := new mergeIoAutomaton(automatons, mergedAutomatons);
 	var automatonsToUml := new automaton2uml(mergedAutomatons, statemachine);
 	
