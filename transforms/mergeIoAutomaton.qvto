@@ -7,20 +7,22 @@ main() {
 	automatons.rootObjects()[IoAutomaton::AutomatonCollection]->map merge();
 }
 
-mapping IoAutomaton::AutomatonCollection::merge() : IoAutomaton::Automaton {
+mapping IoAutomaton::AutomatonCollection::merge() : IoAutomaton::AutomatonCollection {
 	init {
 		log("Start merge()");
-	}
 	
-	var mainActorNames := self.automatons.mainActor.name->asSet();
-	var automatonsResult := object IoAutomaton::AutomatonCollection{};
-	mainActorNames->forEach(mainActorName | true) {
-		var automatonsForActor := self.automatons->select(automaton | automaton.mainActor.name = mainActorName);
-		var mergedAutomaton := automatonsForActor->mergeStatesAndTransitions();
-		var mainActor := object SystemActor{};
-		mainActor.name := mainActorName;
-		mergedAutomaton.mainActor := mainActor;
-		automatonsResult.automatons += mergedAutomaton;
+		var mainActorNames := self.automatons.mainActor.name->asSet();
+		var automatonsResult := object IoAutomaton::AutomatonCollection{};
+		mainActorNames->forEach(mainActorName | true) {
+			log("Actor " + mainActorName);
+			var automatonsForActor := self.automatons->select(automaton | automaton.mainActor.name = mainActorName);
+			var mergedAutomaton := automatonsForActor->mergeStatesAndTransitions();
+			var mainActor := object SystemActor{};
+			mainActor.name := mainActorName;
+			mergedAutomaton.mainActor := mainActor;
+			automatonsResult.automatons += mergedAutomaton;
+		};
+		result := automatonsResult;
 	}
 	
 	end {
@@ -54,7 +56,8 @@ helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
 	
 	mergedAutomaton.states := uniqueStates;
 	mergedAutomaton.transitions := uniqueTransitions;
-	mergedAutomaton.startState := self->asSequence()->first().oclAsType(Automaton).startState;
+	var startState := self->asSequence()->first().oclAsType(Automaton).startState;
+	mergedAutomaton.startState := mergedAutomaton.states->getState(startState.name);
 	return mergedAutomaton;
 }
 
