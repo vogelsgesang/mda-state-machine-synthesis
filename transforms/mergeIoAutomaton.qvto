@@ -46,11 +46,26 @@ helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
 	var uniqueTransitions : Set(Transition) := Set{};
 	self->forEach(automaton | true) {
 		automaton.transitions->forEach(transition | not uniqueTransitions->isTransitionContained(transition)) {
-			var uniqueTransition := transition.deepclone().oclAsType(Transition);
+			var uniqueTransition := object Transition{};
+			uniqueTransition.operation := transition.operation.deepclone().oclAsType(Operation);
+			uniqueTransition.outMessages := transition.outMessages.deepclone().oclAsType(OutMessage);
+			uniqueTransition.returnValue := transition.returnValue.deepclone().oclAsType(Return);
 			uniqueTransition.preState := uniqueStates->getState(transition.preState.name);
 			uniqueTransition.postState := uniqueStates->getState(transition.postState.name);
 			log("Add unique transition " + uniqueTransition.preState.name + " -> " + uniqueTransition.postState.name);
-			uniqueTransitions += uniqueTransition;
+			uniqueTransitions += uniqueTransition; // uniqueTransition.automaton assigned automatically
+		};
+	};
+	
+	uniqueStates->forEach(uniqueState | true) {
+		var reassignedIncomingTransitions : Set(Transition) := Set{};
+		uniqueState.incomingTransitions->forEach(transition | true) {
+			reassignedIncomingTransitions += uniqueTransitions->getTransition(transition.preState, transition.postState);
+		};
+		
+		var reassignedOutgoingTransitions : Set(Transition) := Set{};
+		uniqueState.outgoingTransitions->forEach(transition | true) {
+			reassignedOutgoingTransitions += uniqueTransitions->getTransition(transition.preState, transition.postState);
 		};
 	};
 	
@@ -66,6 +81,14 @@ query Set(IoAutomaton::State)::getState(stateName : String) : IoAutomaton::State
 		return setState;
 	};
 	assert fatal (true) with log("No state with name " + stateName + " found");
+	return null;
+}
+
+query Set(IoAutomaton::Transition)::getTransition(preState : IoAutomaton::State, postState : IoAutomaton::State) : IoAutomaton::Transition {
+	self->forEach(transition | transition.preState.name = preState.name and transition.postState.name = postState.name) {
+		return transition;
+	};
+	assert fatal (true) with log("No transition with preState " + preState.name + " and postState " + postState.name + " found");
 	return null;
 }
 
