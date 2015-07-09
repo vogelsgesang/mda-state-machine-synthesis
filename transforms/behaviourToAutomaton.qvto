@@ -22,7 +22,8 @@ mapping BehaviourModel::Behaviour::toAutomaton() : IOAutomatonModel::Automaton {
 	result.transitions := self.blocks->map toTransition(result);
 	result.mainActor := self.mainActor.deepclone().oclAsType(CommonConcepts::SystemActor);
 	
-	//TODO: startState
+	log("add Start State");
+	result.startState := self.blocks->first().preState.transformState(result);
 	
 	end {
 		log("Finished mapping toAutomaton()");		
