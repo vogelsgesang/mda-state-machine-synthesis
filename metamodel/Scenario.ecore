@@ -17,28 +17,22 @@
   <eClassifiers xsi:type="ecore:EClass" name="Communication" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentScenario" lowerBound="1"
         eType="#//Scenario" eOpposite="#//Scenario/communications"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UserCommunication" eSuperTypes="#//Communication">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sender" lowerBound="1"
-        eType="ecore:EClass CommonConcepts.ecore#//Actor" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//Operation" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="receiver" lowerBound="1"
-        eType="ecore:EClass CommonConcepts.ecore#//UserActor" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sender" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//Actor" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="returnValue" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//Return" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UserCommunication" eSuperTypes="#//Communication">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receiver" lowerBound="1"
+        eType="ecore:EClass CommonConcepts.ecore#//UserActor" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SystemCommunication" eSuperTypes="#//Communication">
     <eStructuralFeatures xsi:type="ecore:EReference" name="preState" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//State" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sender" lowerBound="1"
-        eType="ecore:EClass CommonConcepts.ecore#//Actor" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
-        eType="ecore:EClass CommonConcepts.ecore#//Operation" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="receiver" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//SystemActor" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="returnValue" lowerBound="1"
-        eType="ecore:EClass CommonConcepts.ecore#//Return" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="postState" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//State" containment="true"/>
   </eClassifiers>

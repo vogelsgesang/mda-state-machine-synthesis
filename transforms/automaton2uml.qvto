@@ -8,7 +8,8 @@ transformation automaton2uml(in automaton : IoAutomaton, out uml : UML);
 main() {
 	var allAutomatons = automaton.objectsOfType(Automaton);
 	assert fatal (allAutomatons->mainActorsAreUnique()) with log("Unmerged automatons found");
-	allAutomatons->map automaton2statemachine();
+	var model := object UML::Model { name := "Generated Statemachines"; viewpoint := "executable"; };
+	model.packagedElement += allAutomatons->map automaton2statemachine();
 }
 
 query Set(Automaton)::mainActorsAreUnique() : Boolean {
@@ -24,9 +25,14 @@ mapping Automaton::automaton2statemachine() : UML::StateMachine {
 	//add all the stable states
 	mainRegion.subvertex += self.states->map stableState();
 	//add all the submachines for the activity states
-	var activityStatesAndTransitions := self.states->map activityStates(); //Type: Bag(Tuple{states: Set(Vertex), transitions: Set(Transition)})
+	var activityStatesAndTransitions := self.states->map activityStates();
 	mainRegion.subvertex += activityStatesAndTransitions.umlStates;
 	mainRegion.transition += activityStatesAndTransitions.umlTransitions;
+	//correctly package the models
+	var submachines = mainRegion.subvertex
+	    ->select(v | v.oclIsKindOf(UML::State) and v.oclAsType(UML::State).submachine != null)[UML::State]
+	    ->collect(s | s.submachine);
+	nestedClassifier += submachines;
 	//create the init state and connect it to the first state
 	var initState := object UML::Pseudostate{
 		kind := PseudostateKind::initial;
@@ -43,6 +49,12 @@ mapping Automaton::automaton2statemachine() : UML::StateMachine {
 //generates the stable state for a IoAutomaton::State
 mapping IoAutomaton::State::stableState() : UML::State {
 	result.name := self.name;
+};
+
+intermediate class ConnectionPointReferenceDescriptor {
+	connectionPointReference : UML::ConnectionPointReference;
+	postState : IoAutomaton::State; //the state reached afterwards
+	returnValue : String;
 };
 
 //generates the activity states for all the outgoing transitions,
@@ -63,10 +75,13 @@ mapping IoAutomaton::State::activityStates() : umlStates:Set(UML::State), umlTra
 			umlStates += activityState;
 			/////////////////////////////////////////
 			//create the incoming transition
+			var entryConnectionPointReference = object ConnectionPointReference {
+				state := activityState;
+			};
 			var incomingTransition = object UML::Transition {
 				name := self.name + " -> " + activityState.name;
 				source := self.resolveone().oclAsType(UML::Vertex);
-				target := activityState;
+				target := entryConnectionPointReference;
 				trigger := object UML::Trigger {
 					name := triggerOperation.name;
 					//NOTE: according to the standard, an event must be associated with an UML::Trigger
@@ -77,20 +92,150 @@ mapping IoAutomaton::State::activityStates() : umlStates:Set(UML::State), umlTra
 			/////////////////////////////////////////
 			//collect all information required for creating the substatemachine and the outgoing transition:
 		    // * collect all the transitions triggered by this message/operation
-			var relevantTransition = self.outgoingTransitions->select(t | t.operation = triggerOperation);
-			// * all the different states which are reachable in response to the execution of the activity state
-			var postStates = relevantTransition.postState->asSet();
+			var relevantTransitions = self.outgoingTransitions->select(t | t.operation = triggerOperation); //type: Set(IoAutomaton::Transition)
 			/////////////////////////////////////////
 			//create the outgoing transitions
-			postStates->forEach(postState | true) {
-				umlTransitions += object UML::Transition {
-					name := activityState.name + " -> " + postState.name;
-					source := activityState;
-					target := postState.resolveone().oclAsType(UML::Vertex);
-				}
+			var outConnectionPointReferences : Set(ConnectionPointReferenceDescriptor);
+			//for each postState we need a connection point
+			relevantTransitions.postState->asSet()->forEach(transitionPostState | true) {
+				var umlPostState = transitionPostState.resolveone().oclAsType(UML::Vertex);
+				//and for each returnValue we need a different connection point
+				relevantTransitions->select(t | t.postState = transitionPostState).returnValue->asSet()->forEach(returnVal | true) {
+					var newConnectionPointReference = object ConnectionPointReference {
+						state := activityState;
+					};
+					umlTransitions += object UML::Transition {
+						name := activityState.name + " -> " + transitionPostState.name;
+						source := newConnectionPointReference;
+						target := umlPostState;
+					};
+					outConnectionPointReferences += object ConnectionPointReferenceDescriptor {
+						connectionPointReference := newConnectionPointReference;
+						postState := transitionPostState;
+						returnValue := returnVal.value;
+					};
+				};
 			};
-			//TODO: use actual connection points
-			//TODO: create the submachine
+			/////////////////////////////////////////
+			//create the submachine
+			var submachineName := "Evaluation of " + self.name + "::" + triggerOperation.name;
+			activityState.submachine := relevantTransitions->buildSubMachine(
+				submachineName, entryConnectionPointReference, outConnectionPointReferences);
 		}
 	}
 };
+
+//used in order to keep the mapping between (postState, returnValue) and exitPoints
+intermediate class ExitPointDescriptor {
+	exitPoint : UML::Pseudostate;
+	postState : IoAutomaton::State; //the state reached afterwards
+	returnValue : String;
+};
+
+//represents a fragment of an interaction trace
+//i.e. a postfix of IoAutomaton::Transition
+intermediate class TransitionFragment {
+	exitPoint : UML::Pseudostate; //the state reached afterwards
+	outMessages : Sequence(IoAutomaton::OutMessage); //the transitions leading to this state
+};
+
+//create the submachine for an activity state.
+//Expects to be called on the set of all transitions which should be packed into this submachine.
+//adjust the entry point references and thereby wires it with the remaining automaton.
+helper Set(IoAutomaton::Transition)::buildSubMachine(
+    in machineName : String,
+	out entryConnectionPointReference : ConnectionPointReference,
+	inout outConnectionPointReferences : Set(ConnectionPointReferenceDescriptor))
+	: UML::StateMachine
+{
+	//create the machine and its main region
+	var machine := object UML::StateMachine {
+		name := machineName;
+	};
+	var mainRegion = object UML::Region{ name := "main region" };
+	machine.region += mainRegion;
+	//create the entry pseudostate
+	var entryPoint := object UML::Pseudostate {
+		kind := UML::PseudostateKind::entryPoint;
+	};
+	entryConnectionPointReference.entry := entryPoint;
+	mainRegion.subvertex += entryPoint;
+	//create and connect the exit pseudo states
+	var exitPointDescriptors : Set(ExitPointDescriptor);
+	outConnectionPointReferences->forEach(cpRefDesc | true) {
+		var newExitPoint := object UML::Pseudostate {
+			kind := UML::PseudostateKind::exitPoint;
+		};
+		cpRefDesc.connectionPointReference.exit := newExitPoint;
+		mainRegion.subvertex += newExitPoint;
+		exitPointDescriptors += object ExitPointDescriptor {
+			exitPoint := newExitPoint;
+			postState := cpRefDesc.postState;
+			returnValue := cpRefDesc.returnValue;
+		};
+	};
+	//transform all the transition fragments recursively
+	var transitionFragments = self->map toFragment(exitPointDescriptors)->asSet();
+	var umlTransitionFragments = transitionFragments->buildBranchingFragment(entryPoint, null);
+	return machine;
+}
+
+//converts an IoAutomaton::Transition to a TransitionFragment
+mapping IoAutomaton::Transition::toFragment(in exitPointDescriptors : Set(ExitPointDescriptor)) : TransitionFragment {
+	outMessages := self.outMessages;
+	exitPoint := exitPointDescriptors->selectOne(desc | desc.postState = self.postState and desc.returnValue = self.returnValue.value).exitPoint;
+}
+
+mapping TransitionFragment::cutFirstOutMessage() : TransitionFragment {
+	outMessages := self.outMessages->subSequence(2,self.outMessages->size());
+	exitPoint := self.exitPoint;
+}
+
+//recursively called in order to materialize the branching
+helper Set(TransitionFragment)::buildBranchingFragment(inout preState : UML::Vertex, in prevReturnValue : String) {
+	var verticesToBeConnected : Set(UML::Vertex);
+	//handle all the traces which already reached their end
+	var terminatingFragments = self->select(f | f.outMessages->isEmpty());
+	terminatingFragments->forEach(fragment | true) {
+		verticesToBeConnected += fragment.exitPoint;
+	};
+	//handle the traces which contain messages to other actors
+	var ongoingFragments = self->select(f | not f.outMessages->isEmpty());
+	ongoingFragments->collect(f | f.outMessages->first()).receiver.name->asSet()->forEach(receiverName | true) {
+		self->collect(f | f.outMessages->first())->select(o | o.receiver.name = receiverName).operation.name->asSet()->forEach(opName | true) {
+			//create the state which is actually executing the action
+			var doState := object UML::State {
+				name := receiverName + "." + opName;
+				doActivity := object UML::OpaqueBehavior {
+					name := "r := " + receiverName + "." + opName;
+					body := "r := " + receiverName + "." + opName;
+				}
+			};
+			preState.container.subvertex += doState;
+			verticesToBeConnected += doState;
+			//build the outgoing connections
+			var relevantFragments = self->select(f | f.outMessages->first().receiver.name = receiverName and f.outMessages->first().operation.name = opName);
+			relevantFragments->collect(f | f.outMessages->first().returnValue.value)->asSet()->forEach(returnValue | true){
+				var continuationFragments := relevantFragments->select(f | f.outMessages->first().returnValue.value = returnValue);
+				continuationFragments->map cutFirstOutMessage()->asSet()->buildBranchingFragment(doState, returnValue);
+			};
+		};
+	};
+	//connect all vertices with the preState
+	verticesToBeConnected->forEach(vertex | true) {
+		//connect it with its preState
+		var inTransition = object UML::Transition {
+			source := preState;
+			target := vertex;
+		};
+		if(prevReturnValue <> null) {
+			inTransition.guard := object UML::Constraint {
+				name := "r = " + prevReturnValue;
+				specification := object UML::OpaqueExpression {
+					body := "r = " + prevReturnValue;
+				}
+			};
+		};
+		preState.container.transition += inTransition;
+	};
+}
