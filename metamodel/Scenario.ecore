@@ -5,18 +5,18 @@
     <details key="commonconcepts" value="CommonConcepts.ecore#/"/>
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="ScenarioCollection">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="scenarios" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scenario" upperBound="-1"
         eType="#//Scenario" containment="true" eOpposite="#//Scenario/collection"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Scenario">
     <eStructuralFeatures xsi:type="ecore:EReference" name="collection" lowerBound="1"
-        eType="#//ScenarioCollection" eOpposite="#//ScenarioCollection/scenarios"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="communications" upperBound="-1"
+        eType="#//ScenarioCollection" eOpposite="#//ScenarioCollection/scenario"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="communication" upperBound="-1"
         eType="#//Communication" containment="true" eOpposite="#//Communication/parentScenario"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Communication" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentScenario" lowerBound="1"
-        eType="#//Scenario" eOpposite="#//Scenario/communications"/>
+        eType="#//Scenario" eOpposite="#//Scenario/communication"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//Operation" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sender" lowerBound="1"

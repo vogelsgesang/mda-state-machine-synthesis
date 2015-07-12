@@ -23,9 +23,9 @@ mapping Automaton::automaton2statemachine() : UML::StateMachine {
 	var mainRegion = object UML::Region{ name := "main region" };
 	region += mainRegion;
 	//add all the stable states
-	mainRegion.subvertex += self.states->map stableState();
+	mainRegion.subvertex += self.state->map stableState();
 	//add all the submachines for the activity states
-	var activityStatesAndTransitions := self.states->map activityStates();
+	var activityStatesAndTransitions := self.state->map activityStates();
 	mainRegion.subvertex += activityStatesAndTransitions.umlStates;
 	mainRegion.transition += activityStatesAndTransitions.umlTransitions;
 	//correctly package the models
@@ -66,7 +66,7 @@ mapping IoAutomaton::State::activityStates() : umlStates:Set(UML::State), umlTra
 	init {
 		//for each possible incoming message/operation:
 		//create an activity state and wire it
-		self.outgoingTransitions.operation->flatten()->forEach(triggerOperation | true) {
+		self.outgoingTransition.operation->flatten()->forEach(triggerOperation | true) {
 			/////////////////////////////////////////
 			//create the activity state and give it a name
 			var activityState = object UML::State {
@@ -92,7 +92,7 @@ mapping IoAutomaton::State::activityStates() : umlStates:Set(UML::State), umlTra
 			/////////////////////////////////////////
 			//collect all information required for creating the substatemachine and the outgoing transition:
 		    // * collect all the transitions triggered by this message/operation
-			var relevantTransitions = self.outgoingTransitions->select(t | t.operation = triggerOperation); //type: Set(IoAutomaton::Transition)
+			var relevantTransitions = self.outgoingTransition->select(t | t.operation = triggerOperation); //type: Set(IoAutomaton::Transition)
 			/////////////////////////////////////////
 			//create the outgoing transitions
 			var outConnectionPointReferences : Set(ConnectionPointReferenceDescriptor);
@@ -182,7 +182,7 @@ helper Set(IoAutomaton::Transition)::buildSubMachine(
 
 //converts an IoAutomaton::Transition to a TransitionFragment
 mapping IoAutomaton::Transition::toFragment(in exitPointDescriptors : Set(ExitPointDescriptor)) : TransitionFragment {
-	outMessages := self.outMessages;
+	outMessages := self.outMessage;
 	exitPoint := exitPointDescriptors->selectOne(desc | desc.postState = self.postState and desc.returnValue = self.returnValue.value).exitPoint;
 }
 

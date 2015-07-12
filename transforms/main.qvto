@@ -1,20 +1,20 @@
 import uml2scenario;
-import scenarioToBehaviour;
-import behaviourToAutomaton;
+import scenario2behaviour;
+import behaviour2automaton;
 import mergeIoAutomaton;
 import automaton2uml;
 
 modeltype CommonConcepts uses "urn:commonconcepts/1.0";
 modeltype IoAutomaton uses "urn:io-automaton/1.0"; 
-modeltype UML uses  uml("http://www.eclipse.org/uml2/5.0.0/UML");
+modeltype UML uses  "http://www.eclipse.org/uml2/5.0.0/UML";
 modeltype BehaviourModel uses "urn:behaviour/1.0";
-modeltype ScenarioModel uses scenario("urn:scenario/1.0");
+modeltype ScenarioModel uses "urn:scenario/1.0";
 
 transformation sequenceToState(
 	in sequence : UML, out statemachine : UML)
 	access transformation uml2scenario(in UML, out ScenarioModel)
-	access transformation scenarioToBehaviour(in ScenarioModel, out BehaviourModel)
-	access transformation behaviourToAutomaton(in BehaviourModel, out IoAutomaton)
+	access transformation scenario2behaviour(in ScenarioModel, out BehaviourModel)
+	access transformation behaviour2automaton(in BehaviourModel, out IoAutomaton)
 	access transformation mergeIoAutomaton(in IoAutomaton, out IoAutomaton)
 	access transformation automaton2uml(in IoAutomaton, out UML);
 
@@ -25,14 +25,14 @@ main() {
 	var mergedAutomatons := IoAutomaton.createEmptyModel().oclAsType(IoAutomaton);
 	
 	var umlToScenario := new uml2scenario(sequence, scenarios);
-	var scenario2Behaviour := new scenarioToBehaviour(scenarios, behaviours);
-	var behaviour2Automaton := new behaviourToAutomaton(behaviours, automatons);
+	var scenarioToBehaviour := new scenario2behaviour(scenarios, behaviours);
+	var behaviourToAutomaton := new behaviour2automaton(behaviours, automatons);
 	var mergeAutomatons := new mergeIoAutomaton(automatons, mergedAutomatons);
 	var automatonsToUml := new automaton2uml(mergedAutomatons, statemachine);
 	
 	umlToScenario.transform();
-	scenario2Behaviour.transform();
-	behaviour2Automaton.transform();
+	scenarioToBehaviour.transform();
+	behaviourToAutomaton.transform();
 	mergeAutomatons.transform();
 	automatonsToUml.transform();
 }

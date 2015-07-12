@@ -5,20 +5,20 @@
     <details key="commonconcepts" value="CommonConcepts.ecore#/"/>
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="BehaviourCollection">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="behaviours" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="behaviour" upperBound="-1"
         eType="#//Behaviour" containment="true" eOpposite="#//Behaviour/collection"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Behaviour">
     <eStructuralFeatures xsi:type="ecore:EReference" name="collection" lowerBound="1"
-        eType="#//BehaviourCollection" eOpposite="#//BehaviourCollection/behaviours"/>
+        eType="#//BehaviourCollection" eOpposite="#//BehaviourCollection/behaviour"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mainActor" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//SystemActor" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="blocks" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="block" upperBound="-1"
         eType="#//Block" containment="true" eOpposite="#//Block/parentBehaviour"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Block">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentBehaviour" lowerBound="1"
-        eType="#//Behaviour" eOpposite="#//Behaviour/blocks"/>
+        eType="#//Behaviour" eOpposite="#//Behaviour/block"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="preState" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//State" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inMessage" lowerBound="1"
@@ -33,7 +33,7 @@
         eType="ecore:EClass CommonConcepts.ecore#//Operation" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Activation">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="outMessages" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outMessage" upperBound="-1"
         eType="#//OutMessage" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="returnValue" lowerBound="1"
         eType="ecore:EClass CommonConcepts.ecore#//Return" containment="true"/>

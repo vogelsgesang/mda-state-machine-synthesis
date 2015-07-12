@@ -1,6 +1,6 @@
-modeltype CommonConcepts uses commonconcepts("urn:commonconcepts/1.0"); 
-modeltype UML uses  uml("http://www.eclipse.org/uml2/5.0.0/UML");
-modeltype ScenarioModel uses scenario("urn:scenario/1.0");
+modeltype CommonConcepts uses "urn:commonconcepts/1.0"; 
+modeltype UML uses  "http://www.eclipse.org/uml2/5.0.0/UML";
+modeltype ScenarioModel uses "urn:scenario/1.0";
 
 transformation uml2scenario(in charts : UML, out scenarios : ScenarioModel);
 
@@ -12,7 +12,7 @@ main() {
 
 mapping Model::model2ScenarioCollection() : ScenarioCollection {
 	// get all interactions and map them to scenarios
-	result.scenarios += self.packagedElement->selectByType(Interaction)->map interaction2Scenario();	
+	result.scenario += self.packagedElement->selectByType(Interaction)->map interaction2Scenario();	
 }
 
 mapping Interaction::interaction2Scenario() : Scenario {
@@ -29,16 +29,16 @@ mapping Interaction::interaction2Scenario() : Scenario {
 			if (mos.message.messageSort = MessageSort::reply) {
 				log("Found Message with MessageSort reply: " + mos.message.name);
 				// if message held by the MessageOccurrenceSpecification is of sort reply then fetch the last communication that can be the request to this reply and map the reply message to it
-				var lastCommFromRecToSend : SystemCommunication := communications->select(c | c.oclIsTypeOf(SystemCommunication) and c.oclAsType(SystemCommunication).sysCommCanBeRequestForReply(mos.message))->last().oclAsType(SystemCommunication);
+				var lastCommFromRecToSend : SystemCommunication := communication->select(c | c.oclIsTypeOf(SystemCommunication) and c.oclAsType(SystemCommunication).sysCommCanBeRequestForReply(mos.message))->last().oclAsType(SystemCommunication);
 				lastCommFromRecToSend.returnValue.value := mos.message.name;
 				log("Map it as Return to SystemCommunication: " + lastCommFromRecToSend.operation.name);
 			}	else {
 				// if message is not of sort reply it must be a synchronous call
 				// if receiver of message is the user then the communication is a UserCommunication, else a SystemCommunication
 				if (mos.message.receiveEvent.isUser()) {
-					communications +=  mos.message.map message2UserCommunication();
+					communication +=  mos.message.map message2UserCommunication();
 				}	else {
-					communications +=  mos.message.map message2SystemCommunication();
+					communication +=  mos.message.map message2SystemCommunication();
 				};
 			};	
 		}	else if (f.oclIsTypeOf(StateInvariant)) {
@@ -49,7 +49,7 @@ mapping Interaction::interaction2Scenario() : Scenario {
 				LifelineCurrentStateMap->put(l.name, si.name);
 				// for each communication from the lifeline to which the state belongs that has so far no post state
 				// (i.e. all messages that occured since the last state change until now) the new state is assigned as post state
-				communications->forEach(c | c.oclIsKindOf(SystemCommunication) and c.oclAsType(SystemCommunication).receivedSysCommForLifelineHasNoPostState(l)) {
+				communication->forEach(c | c.oclIsKindOf(SystemCommunication) and c.oclAsType(SystemCommunication).receivedSysCommForLifelineHasNoPostState(l)) {
 					var sysComm = c.oclAsType(SystemCommunication);
 					sysComm.postState := l.createCurrentState();
 					log("Map it as PostState to SystemCommunication: " + sysComm.operation.name);

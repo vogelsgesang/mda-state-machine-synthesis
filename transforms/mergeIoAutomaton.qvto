@@ -4,23 +4,23 @@ modeltype IoAutomaton uses "urn:io-automaton/1.0";
 transformation mergeIoAutomaton(in automatons:IoAutomaton, out diagram:IoAutomaton);
 
 main() {
-	automatons.rootObjects()[IoAutomaton::AutomatonCollection]->map merge();
+	automatons.rootObjects()[IoAutomaton::AutomatonCollection]->map mergeAutomatonCollection();
 }
 
-mapping IoAutomaton::AutomatonCollection::merge() : IoAutomaton::AutomatonCollection {
+mapping IoAutomaton::AutomatonCollection::mergeAutomatonCollection() : IoAutomaton::AutomatonCollection {
 	init {
 		log("Start merge()");
 	
-		var mainActorNames := self.automatons.mainActor.name->asSet();
+		var mainActorNames := self.automaton.mainActor.name->asSet();
 		var automatonsResult := object IoAutomaton::AutomatonCollection{};
 		mainActorNames->forEach(mainActorName | true) {
 			log("Actor " + mainActorName);
-			var automatonsForActor := self.automatons->select(automaton | automaton.mainActor.name = mainActorName);
+			var automatonsForActor := self.automaton->select(automaton | automaton.mainActor.name = mainActorName);
 			var mergedAutomaton := automatonsForActor->mergeStatesAndTransitions();
 			var mainActor := object SystemActor{};
 			mainActor.name := mainActorName;
 			mergedAutomaton.mainActor := mainActor;
-			automatonsResult.automatons += mergedAutomaton;
+			automatonsResult.automaton += mergedAutomaton;
 		};
 		result := automatonsResult;
 	}
@@ -35,7 +35,7 @@ helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
 	
 	var uniqueStates : Set(IoAutomaton::State) := Set{};
 	self->forEach(automaton | true) {
-		automaton.states->forEach(state | not uniqueStates->isStateContained(state)) {
+		automaton.state->forEach(state | not uniqueStates->isStateContained(state)) {
 			var uniqueState := state.deepclone().oclAsType(IoAutomaton::State);
 			log("Add unique state " + uniqueState.name);
 			uniqueStates += uniqueState;
@@ -45,10 +45,10 @@ helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
 	
 	var uniqueTransitions : Set(Transition) := Set{};
 	self->forEach(automaton | true) {
-		automaton.transitions->forEach(transition | not uniqueTransitions->isTransitionContained(transition)) {
+		automaton.transition->forEach(transition | not uniqueTransitions->isTransitionContained(transition)) {
 			var uniqueTransition := object Transition{};
 			uniqueTransition.operation := transition.operation.deepclone().oclAsType(Operation);
-			uniqueTransition.outMessages := transition.outMessages.deepclone().oclAsType(OutMessage);
+			uniqueTransition.outMessage := transition.outMessage.deepclone().oclAsType(OutMessage);
 			uniqueTransition.returnValue := transition.returnValue.deepclone().oclAsType(Return);
 			uniqueTransition.preState := uniqueStates->getState(transition.preState.name);
 			uniqueTransition.postState := uniqueStates->getState(transition.postState.name);
@@ -59,22 +59,22 @@ helper Set(IoAutomaton::Automaton)::mergeStatesAndTransitions() : Automaton {
 	
 	uniqueStates->forEach(uniqueState | true) {
 		var reassignedIncomingTransitions : Set(Transition) := Set{};
-		uniqueState.incomingTransitions->forEach(transition | true) {
+		uniqueState.incomingTransition->forEach(transition | true) {
 			reassignedIncomingTransitions += uniqueTransitions->getTransition(transition.preState, transition.postState);
 		};
-		uniqueState.incomingTransitions := reassignedIncomingTransitions;
+		uniqueState.incomingTransition := reassignedIncomingTransitions;
 		
 		var reassignedOutgoingTransitions : Set(Transition) := Set{};
-		uniqueState.outgoingTransitions->forEach(transition | true) {
+		uniqueState.outgoingTransition->forEach(transition | true) {
 			reassignedOutgoingTransitions += uniqueTransitions->getTransition(transition.preState, transition.postState);
 		};
-		uniqueState.outgoingTransitions := reassignedOutgoingTransitions;
+		uniqueState.outgoingTransition := reassignedOutgoingTransitions;
 	};
 	
-	mergedAutomaton.states := uniqueStates;
-	mergedAutomaton.transitions := uniqueTransitions;
+	mergedAutomaton.state := uniqueStates;
+	mergedAutomaton.transition := uniqueTransitions;
 	var startState := self->asSequence()->first().oclAsType(Automaton).startState;
-	mergedAutomaton.startState := mergedAutomaton.states->getState(startState.name);
+	mergedAutomaton.startState := mergedAutomaton.state->getState(startState.name);
 	return mergedAutomaton;
 }
 
@@ -100,17 +100,17 @@ query Set(IoAutomaton::State)::isStateContained(state : IoAutomaton::State) : Bo
 }
 
 query Set(IoAutomaton::Transition)::isTransitionContained(transition : IoAutomaton::Transition) : Boolean {
-	var outMessages := transition.outMessages;
+	var outMessages := transition.outMessage;
 	self->forEach(setTransition 
 					| setTransition.operation.name = transition.operation.name
 					and setTransition.preState.name = transition.preState.name
 					and setTransition.postState.name = transition.postState.name) {
 		// operation, pre and post equal
 		// now check the outMessages
-		if(not (outMessages->size() = setTransition.outMessages->size())) {
+		if(not (outMessages->size() = setTransition.outMessage->size())) {
 			return false;
 		};
-		var outProduct := outMessages->product(setTransition.outMessages);
+		var outProduct := outMessages->product(setTransition.outMessage);
 		var equalCount := 0;
 		outProduct->forEach(outProdTuple | true) {
 			var first := outProdTuple.first;

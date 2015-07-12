@@ -2,30 +2,30 @@ modeltype BehaviourModel uses "urn:behaviour/1.0";
 modeltype ScenarioModel uses "urn:scenario/1.0";
 modeltype CommonConcepts uses "urn:commonconcepts/1.0";
 
-transformation scenarioToBehaviour(in sTable:ScenarioModel, out bTable:BehaviourModel);
+transformation scenario2behaviour(in sTable:ScenarioModel, out bTable:BehaviourModel);
 
 property alreadyMappedActors : Set(SystemActor);
 
 
 main() {
 
-	sTable.objectsOfType(ScenarioCollection)->map toBehaviourCollection();
+	sTable.objectsOfType(ScenarioCollection)->map scenarioCollection2BehaviourCollection();
 }
 
-mapping ScenarioModel::ScenarioCollection::toBehaviourCollection() : BehaviourCollection {
+mapping ScenarioModel::ScenarioCollection::scenarioCollection2BehaviourCollection() : BehaviourCollection {
 	log("Mapping ScenarioCollection to BehaviourCollection");
 	
 	// one set of behaviours for each scenario
-	var seqOfBehaviourSets := self.scenarios->map toBehaviourCollectionPerScenario();
+	var seqOfBehaviourSets := self.scenario->map scenario2BehaviourSet();
 	
 	// flaaten the behaviourSets into the resulting BehaviourCollection (by unionizing all behaviourSets)
 	seqOfBehaviourSets->forEach(behaviourSet) {
-		result.behaviours := result.behaviours->union(behaviourSet);
+		result.behaviour := result.behaviour->union(behaviourSet);
 	};
 }
 
 // maps a scenario to a set of behaviours (one behaviour per system actor)
-mapping ScenarioModel::Scenario::toBehaviourCollectionPerScenario() : Set(Behaviour) {
+mapping ScenarioModel::Scenario::scenario2BehaviourSet() : Set(Behaviour) {
 	init {
 		log("Mapping Scenario to BehaviourSet");
 		
@@ -42,8 +42,8 @@ mapping ScenarioModel::Scenario::toBehaviourCollectionPerScenario() : Set(Behavi
 				actorBehaviour.mainActor := sysActor.deepclone().oclAsType(SystemActor);
 				
 				// map only communication where actor is involved	
-				var commSetForActor := self.communications->getCommunicationSetForActor(sysActor);
-				actorBehaviour.blocks := commSetForActor->map toBlocks(sysActor);
+				var commSetForActor := self.communication->getCommunicationSetForActor(sysActor);
+				actorBehaviour.block := commSetForActor->map communicationSet2blockSet(sysActor);
 				result += actorBehaviour;
 
 				//mark sysActor as mapped (so we don't get duplicates)
@@ -54,7 +54,7 @@ mapping ScenarioModel::Scenario::toBehaviourCollectionPerScenario() : Set(Behavi
 }
 	
 // maps all communications for system actor "actor" to a set of behaviourBlocks 
-mapping OrderedSet(ScenarioModel::Communication)::toBlocks(actor : SystemActor) : OrderedSet(Block) {
+mapping OrderedSet(ScenarioModel::Communication)::communicationSet2blockSet(actor : SystemActor) : OrderedSet(Block) {
 	init{
 		log("Mapping Set of Communication to Block");
 		
@@ -83,7 +83,7 @@ mapping OrderedSet(ScenarioModel::Communication)::toBlocks(actor : SystemActor) 
 				// add outMessage to last block
 				} else if(sysComm.sender.name = actor.name){
 					block := result -> last();
-					block.activation.outMessages += sysComm.map sysCommToOutMessage();
+					block.activation.outMessage += sysComm.map sysComm2OutMessage();
 				}
 				
 			// add outMessage to last block
@@ -91,14 +91,14 @@ mapping OrderedSet(ScenarioModel::Communication)::toBlocks(actor : SystemActor) 
 				var userComm := communication.oclAsType(UserCommunication);
 				
 				block := result -> last();
-				block.activation.outMessages += userComm.map userCommToOutMessage();
+				block.activation.outMessage += userComm.map userComm2OutMessage();
 			};
 		};
 	}
 }
 
 // map operation, receiver and returnValue of SystemCommunication to OutMessage
-mapping SystemCommunication::sysCommToOutMessage() : OutMessage {
+mapping SystemCommunication::sysComm2OutMessage() : OutMessage {
 	log("Mapping SystemCommunication to OutMessage: " + self.operation.name);
 	
 	result.operation := self.operation.deepclone().oclAsType(Operation);
@@ -108,7 +108,7 @@ mapping SystemCommunication::sysCommToOutMessage() : OutMessage {
 }
 
 // map operation, receiver and returnValue of UserCommunication to OutMessage
-mapping UserCommunication::userCommToOutMessage() : OutMessage {
+mapping UserCommunication::userComm2OutMessage() : OutMessage {
 	log("Mapping UserCommunication to OutMessage: " + self.operation.name);
 	
 	result.operation := self.operation.deepclone().oclAsType(Operation);

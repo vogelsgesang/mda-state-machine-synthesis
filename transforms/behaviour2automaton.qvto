@@ -2,28 +2,28 @@ modeltype BehaviourModel uses "urn:behaviour/1.0";
 modeltype IOAutomatonModel uses "urn:io-automaton/1.0";
 modeltype CommonConcepts uses "urn:commonconcepts/1.0";
 
-transformation behaviourToAutomaton(in table:BehaviourModel, out diagram:IOAutomatonModel);
+transformation behaviour2automaton(in table:BehaviourModel, out diagram:IOAutomatonModel);
 
 
 main() {
-	table.objectsOfType(BehaviourCollection)->map toAutomatonCollection();
+	table.objectsOfType(BehaviourCollection)->map behaviourCollection2automatonCollection();
 }
 
-mapping BehaviourModel::BehaviourCollection::toAutomatonCollection() : IOAutomatonModel::AutomatonCollection {
-	result.automatons := self.behaviours->map toAutomaton();
+mapping BehaviourModel::BehaviourCollection::behaviourCollection2automatonCollection() : IOAutomatonModel::AutomatonCollection {
+	result.automaton := self.behaviour->map behaviour2automaton();
 }
 
-mapping BehaviourModel::Behaviour::toAutomaton() : IOAutomatonModel::Automaton {
+mapping BehaviourModel::Behaviour::behaviour2automaton() : IOAutomatonModel::Automaton {
 	
 	init {
 		log("Start mapping toAutomaton()");
 	}
 	
-	result.transitions := self.blocks->map toTransition(result);
+	result.transition := self.block->map block2transition(result);
 	result.mainActor := self.mainActor.deepclone().oclAsType(CommonConcepts::SystemActor);
 	
 	log("add Start State");
-	result.startState := self.blocks->first().preState.transformState(result);
+	result.startState := self.block->first().preState.state2state(result);
 	
 	end {
 		log("Finished mapping toAutomaton()");		
@@ -31,18 +31,18 @@ mapping BehaviourModel::Behaviour::toAutomaton() : IOAutomatonModel::Automaton {
 }
 
 
-mapping BehaviourModel::Block::toTransition(inout automaton : IOAutomatonModel::Automaton) : IOAutomatonModel::Transition {
+mapping BehaviourModel::Block::block2transition(inout automaton : IOAutomatonModel::Automaton) : IOAutomatonModel::Transition {
 	
 	init {
 		log("Start mapping toTransition()");
 	}
 	
-	result.preState := self.preState.transformState(automaton);
-	result.postState := self.postState.transformState(automaton);
+	result.preState := self.preState.state2state(automaton);
+	result.postState := self.postState.state2state(automaton);
 
 	result.operation := self.inMessage.operation.deepclone().oclAsType(CommonConcepts::Operation);
 	result.returnValue := self.activation.returnValue.deepclone().oclAsType(CommonConcepts::Return);
-	result.outMessages := self.activation.outMessages->map transformOutMessage();
+	result.outMessage := self.activation.outMessage->map outMessage2outMessage();
 		
 	end {
 		log("Finished mapping toTransition()");		
@@ -50,7 +50,7 @@ mapping BehaviourModel::Block::toTransition(inout automaton : IOAutomatonModel::
 }
 
 
-mapping BehaviourModel::OutMessage::transformOutMessage() : IOAutomatonModel::OutMessage {
+mapping BehaviourModel::OutMessage::outMessage2outMessage() : IOAutomatonModel::OutMessage {
 	operation := self.operation.deepclone().oclAsType(CommonConcepts::Operation);
 	receiver := self.receiver.deepclone().oclAsType(CommonConcepts::Actor);
 	returnValue := self.returnValue.deepclone().oclAsType(CommonConcepts::Return);
@@ -59,17 +59,17 @@ mapping BehaviourModel::OutMessage::transformOutMessage() : IOAutomatonModel::Ou
 //transforms a State from the Behaviour model to an IOAutomaton-State
 //if the State has already been transformed before, ie. exists in the automaton's set of already mapped states, use the existing one
 //else create new IOAutomaton-State
-helper CommonConcepts::State::transformState(inout automaton : IOAutomatonModel::Automaton) : IOAutomatonModel::State {
+helper CommonConcepts::State::state2state(inout automaton : IOAutomatonModel::Automaton) : IOAutomatonModel::State {
 	
 	var returnState : IOAutomatonModel::State;
 	
-	if(automaton.states.name->includes(self.name)) {
-		returnState := automaton.states->selectOne(s | s.name = self.name);
+	if(automaton.state.name->includes(self.name)) {
+		returnState := automaton.state->selectOne(s | s.name = self.name);
 	}
 	else {
 		var state : IOAutomatonModel::State := object IOAutomatonModel::State {};
 		state.name := self.name;
-		automaton.states += state;
+		automaton.state += state;
 		returnState := state;
 	};
 	
