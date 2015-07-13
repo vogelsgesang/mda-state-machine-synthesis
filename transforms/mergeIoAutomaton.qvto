@@ -1,10 +1,10 @@
 modeltype CommonConcepts uses "urn:commonconcepts/1.0";
 modeltype IoAutomaton uses "urn:io-automaton/1.0";
 
-transformation mergeIoAutomaton(in automatons:IoAutomaton, out diagram:IoAutomaton);
+transformation mergeIoAutomaton(in automata:IoAutomaton, out diagram:IoAutomaton);
 
 main() {
-	automatons.rootObjects()[IoAutomaton::AutomatonCollection]->map mergeAutomatonCollection();
+	automata.rootObjects()[IoAutomaton::AutomatonCollection]->map mergeAutomatonCollection();
 }
 
 mapping IoAutomaton::AutomatonCollection::mergeAutomatonCollection() : IoAutomaton::AutomatonCollection {
@@ -12,21 +12,21 @@ mapping IoAutomaton::AutomatonCollection::mergeAutomatonCollection() : IoAutomat
 		log("Start merge()");
 	
 		var mainActorNames := self.automaton.mainActor.name->asSet();
-		var automatonsResult := object IoAutomaton::AutomatonCollection{};
+		var automataResult := object IoAutomaton::AutomatonCollection{};
 		mainActorNames->forEach(mainActorName | true) {
 			log("Actor " + mainActorName);
-			var automatonsForActor := self.automaton->select(automaton | automaton.mainActor.name = mainActorName);
-			var mergedAutomaton := automatonsForActor->mergeStatesAndTransitions();
+			var automataForActor := self.automaton->select(automaton | automaton.mainActor.name = mainActorName);
+			var mergedAutomaton := automataForActor->mergeStatesAndTransitions();
 			var mainActor := object SystemActor{};
 			mainActor.name := mainActorName;
 			mergedAutomaton.mainActor := mainActor;
-			automatonsResult.automaton += mergedAutomaton;
+			automataResult.automaton += mergedAutomaton;
 		};
-		result := automatonsResult;
+		result := automataResult;
 	}
 	
 	end {
-		log("Finished automatons merge()");		
+		log("Finished automata merge()");
 	}
 }
 

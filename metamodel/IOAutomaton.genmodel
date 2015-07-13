@@ -7,7 +7,7 @@
   <foreignModel>IOAutomaton.ecore</foreignModel>
   <genPackages prefix="IoAutomaton" disposableProviderFactory="true" ecorePackage="IOAutomaton.ecore#/">
     <genClasses ecoreClass="IOAutomaton.ecore#//AutomatonCollection">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//AutomatonCollection/automatons"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//AutomatonCollection/automata"/>
     </genClasses>
     <genClasses ecoreClass="IOAutomaton.ecore#//Automaton">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference IOAutomaton.ecore#//Automaton/mainActor"/>

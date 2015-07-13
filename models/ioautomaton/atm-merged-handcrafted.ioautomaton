@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ioAutomaton:AutomatonCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commonconcepts="urn:commonconcepts/1.0" xmlns:ioAutomaton="urn:io-automaton/1.0">
-  <automatons startState="//@automatons.0/@states.0">
+  <automata startState="//@automata.0/@states.0">
     <mainActor name="atm"/>
-    <states name="WaitCard" outgoingTransitions="//@automatons.0/@transitions.0" incomingTransitions="//@automatons.0/@transitions.4"/>
-    <states name="WaitTakeCard" outgoingTransitions="//@automatons.0/@transitions.4" incomingTransitions="//@automatons.0/@transitions.2 //@automatons.0/@transitions.3"/>
-    <states name="WaitPassword" outgoingTransitions="//@automatons.0/@transitions.1 //@automatons.0/@transitions.2 //@automatons.0/@transitions.3" incomingTransitions="//@automatons.0/@transitions.0 //@automatons.0/@transitions.1"/>
-    <transitions preState="//@automatons.0/@states.0" postState="//@automatons.0/@states.2">
+    <states name="WaitCard" outgoingTransitions="//@automata.0/@transitions.0" incomingTransitions="//@automata.0/@transitions.4"/>
+    <states name="WaitTakeCard" outgoingTransitions="//@automata.0/@transitions.4" incomingTransitions="//@automata.0/@transitions.2 //@automata.0/@transitions.3"/>
+    <states name="WaitPassword" outgoingTransitions="//@automata.0/@transitions.1 //@automata.0/@transitions.2 //@automata.0/@transitions.3" incomingTransitions="//@automata.0/@transitions.0 //@automata.0/@transitions.1"/>
+    <transitions preState="//@automata.0/@states.0" postState="//@automata.0/@states.2">
       <operation name="insertCard"/>
       <outMessages>
         <operation name="requestPassword"/>
@@ -14,7 +14,7 @@
       </outMessages>
       <returnValue value="void"/>
     </transitions>
-    <transitions preState="//@automatons.0/@states.2" postState="//@automatons.0/@states.2">
+    <transitions preState="//@automata.0/@states.2" postState="//@automata.0/@states.2">
       <operation name="enterPassword"/>
       <outMessages>
         <operation name="verifyAccount"/>
@@ -28,7 +28,7 @@
       </outMessages>
       <returnValue value="void"/>
     </transitions>
-    <transitions preState="//@automatons.0/@states.2" postState="//@automatons.0/@states.1">
+    <transitions preState="//@automata.0/@states.2" postState="//@automata.0/@states.1">
       <operation name="enterPassword"/>
       <outMessages>
         <operation name="verifyAccount"/>
@@ -57,7 +57,7 @@
       </outMessages>
       <returnValue value="void"/>
     </transitions>
-    <transitions preState="//@automatons.0/@states.2" postState="//@automatons.0/@states.1">
+    <transitions preState="//@automata.0/@states.2" postState="//@automata.0/@states.1">
       <operation name="cancel"/>
       <outMessages>
         <operation name="canceledMessage"/>
@@ -76,7 +76,7 @@
       </outMessages>
       <returnValue value="void"/>
     </transitions>
-    <transitions preState="//@automatons.0/@states.1" postState="//@automatons.0/@states.0">
+    <transitions preState="//@automata.0/@states.1" postState="//@automata.0/@states.0">
       <operation name="takeCard"/>
       <outMessages>
         <operation name="displayMainScreen"/>
@@ -85,11 +85,11 @@
       </outMessages>
       <returnValue value="void"/>
     </transitions>
-  </automatons>
-  <automatons startState="//@automatons.1/@states.0">
+  </automata>
+  <automata startState="//@automata.1/@states.0">
     <mainActor name="consortium"/>
-    <states name="WaitVerify" outgoingTransitions="//@automatons.1/@transitions.0 //@automatons.1/@transitions.1" incomingTransitions="//@automatons.1/@transitions.0 //@automatons.1/@transitions.1"/>
-    <transitions preState="//@automatons.1/@states.0" postState="//@automatons.1/@states.0">
+    <states name="WaitVerify" outgoingTransitions="//@automata.1/@transitions.0 //@automata.1/@transitions.1" incomingTransitions="//@automata.1/@transitions.0 //@automata.1/@transitions.1"/>
+    <transitions preState="//@automata.1/@states.0" postState="//@automata.1/@states.0">
       <operation name="verifyAccount"/>
       <outMessages>
         <operation name="verifyCardWithBank"/>
@@ -98,7 +98,7 @@
       </outMessages>
       <returnValue value="badAccount"/>
     </transitions>
-    <transitions preState="//@automatons.1/@states.0" postState="//@automatons.1/@states.0">
+    <transitions preState="//@automata.1/@states.0" postState="//@automata.1/@states.0">
       <operation name="verifyAccount"/>
       <outMessages>
         <operation name="verifyCardWithBank"/>
@@ -107,5 +107,5 @@
       </outMessages>
       <returnValue value="badPassword"/>
     </transitions>
-  </automatons>
+  </automata>
 </ioAutomaton:AutomatonCollection>

@@ -6,10 +6,10 @@ transformation automaton2uml(in automaton : IoAutomaton, out uml : UML);
 //configuration property actors : Set(String);
 
 main() {
-	var allAutomatons = automaton.objectsOfType(Automaton);
-	assert fatal (allAutomatons->mainActorsAreUnique()) with log("Unmerged automatons found");
+	var allAutomata = automaton.objectsOfType(Automaton);
+	assert fatal (allAutomata->mainActorsAreUnique()) with log("Unmerged automata found");
 	var model := object UML::Model { name := "Generated Statemachines"; viewpoint := "executable"; };
-	model.packagedElement += allAutomatons->map automaton2statemachine();
+	model.packagedElement += allAutomata->map automaton2statemachine();
 }
 
 query Set(Automaton)::mainActorsAreUnique() : Boolean {

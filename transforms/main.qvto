@@ -21,18 +21,18 @@ transformation sequenceToState(
 main() {
 	var scenarios := ScenarioModel.createEmptyModel().oclAsType(ScenarioModel);
 	var behaviours := BehaviourModel.createEmptyModel().oclAsType(BehaviourModel);
-	var automatons := IoAutomaton.createEmptyModel().oclAsType(IoAutomaton);
-	var mergedAutomatons := IoAutomaton.createEmptyModel().oclAsType(IoAutomaton);
+	var automata := IoAutomaton.createEmptyModel().oclAsType(IoAutomaton);
+	var mergedAutomata := IoAutomaton.createEmptyModel().oclAsType(IoAutomaton);
 	
 	var umlToScenario := new uml2scenario(sequence, scenarios);
 	var scenarioToBehaviour := new scenario2behaviour(scenarios, behaviours);
-	var behaviourToAutomaton := new behaviour2automaton(behaviours, automatons);
-	var mergeAutomatons := new mergeIoAutomaton(automatons, mergedAutomatons);
-	var automatonsToUml := new automaton2uml(mergedAutomatons, statemachine);
+	var behaviourToAutomaton := new behaviour2automaton(behaviours, automata);
+	var mergeAutomata := new mergeIoAutomaton(automata, mergedAutomata);
+	var automataToUml := new automaton2uml(mergedAutomata, statemachine);
 	
 	umlToScenario.transform();
 	scenarioToBehaviour.transform();
 	behaviourToAutomaton.transform();
-	mergeAutomatons.transform();
-	automatonsToUml.transform();
+	mergeAutomata.transform();
+	automataToUml.transform();
 }
