@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trace:Trace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:trace="http:///www.eclipse.org/m2m/qvt/operational/trace.ecore">
+  <traceRecords>
+    <mappingOperation name="behaviourCollection2automatonCollection" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//behaviourCollection2automatonCollection"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="BehaviourCollection">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="AutomatonCollection">
+        <value>
+          <modelElement href="atm.ioautomaton#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="behaviour2automaton" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//behaviour2automaton"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Behaviour">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="block2transition" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//block2transition"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Block">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.0/@block.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters kind="INOUT" name="automaton" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="Transition">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0/@transition.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.0/@block.0/@activation/@outMessage.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0/@transition.0/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="block2transition" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//block2transition"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Block">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.0/@block.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters kind="INOUT" name="automaton" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="Transition">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0/@transition.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.0/@block.1/@activation/@outMessage.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0/@transition.1/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.0/@block.1/@activation/@outMessage.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0/@transition.1/@outMessage.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.0/@block.1/@activation/@outMessage.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0/@transition.1/@outMessage.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.0/@block.1/@activation/@outMessage.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0/@transition.1/@outMessage.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.0/@block.1/@activation/@outMessage.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0/@transition.1/@outMessage.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="block2transition" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//block2transition"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Block">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.0/@block.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters kind="INOUT" name="automaton" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="Transition">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0/@transition.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.0/@block.2/@activation/@outMessage.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.0/@transition.2/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="behaviour2automaton" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//behaviour2automaton"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Behaviour">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="block2transition" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//block2transition"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Block">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.1/@block.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters kind="INOUT" name="automaton" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="Transition">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1/@transition.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.1/@block.0/@activation/@outMessage.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1/@transition.0/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.1/@block.0/@activation/@outMessage.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1/@transition.0/@outMessage.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="block2transition" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//block2transition"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Block">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.1/@block.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters kind="INOUT" name="automaton" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="Transition">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1/@transition.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.1/@block.1/@activation/@outMessage.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1/@transition.1/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.1/@block.1/@activation/@outMessage.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1/@transition.1/@outMessage.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.1/@block.1/@activation/@outMessage.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1/@transition.1/@outMessage.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="block2transition" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//block2transition"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Block">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.1/@block.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters kind="INOUT" name="automaton" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="Transition">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1/@transition.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.1/@block.2/@activation/@outMessage.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.1/@transition.2/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="behaviour2automaton" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//behaviour2automaton"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Behaviour">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="block2transition" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//block2transition"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Block">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.2/@block.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters kind="INOUT" name="automaton" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.2"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="Transition">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.2/@transition.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.2/@block.0/@activation/@outMessage.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.2/@transition.0/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="behaviour2automaton" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//behaviour2automaton"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Behaviour">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="block2transition" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//block2transition"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Block">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.3/@block.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters kind="INOUT" name="automaton" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.3"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="Transition">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.3/@transition.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="behaviour2automaton" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//behaviour2automaton"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Behaviour">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="block2transition" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//block2transition"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Block">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.4/@block.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters kind="INOUT" name="automaton" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.4"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="Transition">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.4/@transition.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="behaviour2automaton" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//behaviour2automaton"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Behaviour">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="block2transition" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//block2transition"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Block">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.5/@block.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters kind="INOUT" name="automaton" type="Automaton">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.5"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="Transition">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.5/@transition.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="outMessage2outMessage" package="behaviour2automaton" module="behaviour2automaton">
+      <runtimeMappingOperation href="qvto:/module.env#//outMessage2outMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OutMessage">
+        <value>
+          <modelElement href="../behaviour/atm.behaviour#//@behaviour.5/@block.0/@activation/@outMessage.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.ioautomaton#//@automaton.5/@transition.0/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+</trace:Trace>

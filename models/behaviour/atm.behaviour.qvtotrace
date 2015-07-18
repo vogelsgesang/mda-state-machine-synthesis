@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trace:Trace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:trace="http:///www.eclipse.org/m2m/qvt/operational/trace.ecore">
+  <traceRecords>
+    <mappingOperation name="scenarioCollection2BehaviourCollection" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//scenarioCollection2BehaviourCollection"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="ScenarioCollection">
+        <value>
+          <modelElement href="../scenario/atm.scenario#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="BehaviourCollection">
+        <value>
+          <modelElement href="atm.behaviour#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="sysComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//sysComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="SystemCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.2/@block.0/@activation/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="communicationSet2blockSet" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//communicationSet2blockSet"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OrderedSet(Communication)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.1"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.2"/>
+          </collection>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="actor" type="SystemActor">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.1/@receiver"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="OrderedSet(Block)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.2/@block.0"/>
+          </collection>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="sysComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//sysComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="SystemCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.1/@block.0/@activation/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="userComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//userComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="UserCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.1/@block.0/@activation/@outMessage.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="userComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//userComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="UserCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.1/@block.1/@activation/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="userComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//userComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="UserCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.6"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.1/@block.1/@activation/@outMessage.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="userComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//userComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="UserCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.7"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.1/@block.1/@activation/@outMessage.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="userComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//userComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="UserCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.9"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.1/@block.2/@activation/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="communicationSet2blockSet" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//communicationSet2blockSet"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OrderedSet(Communication)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.0"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.1"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.3"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.4"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.5"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.6"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.7"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.8"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.9"/>
+          </collection>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="actor" type="SystemActor">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.7/@sender"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="OrderedSet(Block)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.1/@block.0"/>
+          </collection>
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.1/@block.1"/>
+          </collection>
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.1/@block.2"/>
+          </collection>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="communicationSet2blockSet" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//communicationSet2blockSet"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OrderedSet(Communication)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.2"/>
+          </collection>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="actor" type="SystemActor">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.0/@communication.2/@receiver"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="OrderedSet(Block)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.3/@block.0"/>
+          </collection>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="scenario2BehaviourSet" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//scenario2BehaviourSet"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Scenario">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Set(Behaviour)">
+        <value collectionType="Set">
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.1"/>
+          </collection>
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.2"/>
+          </collection>
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.3"/>
+          </collection>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="userComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//userComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="UserCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.0/@block.0/@activation/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="sysComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//sysComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="SystemCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.0/@block.1/@activation/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="userComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//userComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="UserCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.0/@block.1/@activation/@outMessage.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="userComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//userComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="UserCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.6"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.0/@block.1/@activation/@outMessage.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="userComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//userComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="UserCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.7"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.0/@block.1/@activation/@outMessage.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="userComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//userComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="UserCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.8"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.0/@block.1/@activation/@outMessage.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="userComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//userComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="UserCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.10"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.0/@block.2/@activation/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="communicationSet2blockSet" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//communicationSet2blockSet"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OrderedSet(Communication)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.0"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.1"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.2"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.3"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.5"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.6"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.7"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.8"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.9"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.10"/>
+          </collection>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="actor" type="SystemActor">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.5/@sender"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="OrderedSet(Block)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.0/@block.0"/>
+          </collection>
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.0/@block.1"/>
+          </collection>
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.0/@block.2"/>
+          </collection>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="sysComm2OutMessage" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//sysComm2OutMessage"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="SystemCommunication">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="OutMessage">
+        <value>
+          <modelElement href="atm.behaviour#//@behaviour.5/@block.0/@activation/@outMessage.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="communicationSet2blockSet" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//communicationSet2blockSet"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OrderedSet(Communication)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.3"/>
+          </collection>
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.4"/>
+          </collection>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="actor" type="SystemActor">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.3/@receiver"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="OrderedSet(Block)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.5/@block.0"/>
+          </collection>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="communicationSet2blockSet" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//communicationSet2blockSet"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="OrderedSet(Communication)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.4"/>
+          </collection>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="actor" type="SystemActor">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1/@communication.4/@receiver"/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="OrderedSet(Block)">
+        <value collectionType="OrderedSet">
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.4/@block.0"/>
+          </collection>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="scenario2BehaviourSet" package="scenario2behaviour" module="scenario2behaviour">
+      <runtimeMappingOperation href="qvto:/module.env#//scenario2BehaviourSet"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Scenario">
+        <value>
+          <modelElement href="../scenario/atm.scenario#//@scenario.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Set(Behaviour)">
+        <value collectionType="Set">
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.0"/>
+          </collection>
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.4"/>
+          </collection>
+          <collection>
+            <modelElement href="atm.behaviour#//@behaviour.5"/>
+          </collection>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+</trace:Trace>

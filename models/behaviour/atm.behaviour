@@ -1,71 +1,196 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<behaviour:BehaviourCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:behaviour="urn:behaviour/1.0" xmlns:commonconcepts="urn:commonconcepts/1.0">
-  <behaviours>
+<behaviour:BehaviourCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:behaviour="urn:behaviour/1.0" xmlns:commonconcepts="urn:commonconcepts/1.0" xsi:schemaLocation="urn:behaviour/1.0 ../../metamodel/Behaviour.ecore urn:commonconcepts/1.0 ../../metamodel/CommonConcepts.ecore">
+  <behaviour>
     <mainActor name="atm"/>
-    <blocks>
+    <block>
       <preState name="WaitCard"/>
       <inMessage>
         <operation name="insertCard"/>
       </inMessage>
       <activation>
-        <outMessages>
+        <outMessage>
           <operation name="requestPassword"/>
           <receiver xsi:type="commonconcepts:UserActor" name="user"/>
           <returnValue value="void"/>
-        </outMessages>
+        </outMessage>
         <returnValue value="void"/>
       </activation>
       <postState name="WaitPassword"/>
-    </blocks>
-    <blocks>
+    </block>
+    <block>
       <preState name="WaitPassword"/>
       <inMessage>
         <operation name="enterPassword"/>
       </inMessage>
       <activation>
-        <outMessages>
+        <outMessage>
           <operation name="verifyAccount"/>
           <receiver xsi:type="commonconcepts:SystemActor" name="consortium"/>
           <returnValue value="badAccount"/>
-        </outMessages>
-        <outMessages>
+        </outMessage>
+        <outMessage>
           <operation name="badAccountMessage"/>
           <receiver xsi:type="commonconcepts:UserActor" name="user"/>
           <returnValue value="void"/>
-        </outMessages>
-        <outMessages>
+        </outMessage>
+        <outMessage>
           <operation name="printReceipt"/>
           <receiver xsi:type="commonconcepts:UserActor" name="user"/>
           <returnValue value="void"/>
-        </outMessages>
-        <outMessages>
+        </outMessage>
+        <outMessage>
           <operation name="ejectCard"/>
           <receiver xsi:type="commonconcepts:UserActor" name="user"/>
           <returnValue value="void"/>
-        </outMessages>
-        <outMessages>
+        </outMessage>
+        <outMessage>
           <operation name="requestTakeCard"/>
           <receiver xsi:type="commonconcepts:UserActor" name="user"/>
           <returnValue value="void"/>
-        </outMessages>
+        </outMessage>
         <returnValue value="void"/>
       </activation>
       <postState name="WaitTakeCard"/>
-    </blocks>
-    <blocks>
+    </block>
+    <block>
       <preState name="WaitTakeCard"/>
       <inMessage>
         <operation name="takeCard"/>
       </inMessage>
       <activation>
-        <outMessages>
+        <outMessage>
           <operation name="displayMainScreen"/>
           <receiver xsi:type="commonconcepts:UserActor" name="user"/>
           <returnValue value="void"/>
-        </outMessages>
+        </outMessage>
         <returnValue value="void"/>
       </activation>
       <postState name="WaitCard"/>
-    </blocks>
-  </behaviours>
+    </block>
+  </behaviour>
+  <behaviour>
+    <mainActor name="atm"/>
+    <block>
+      <preState name="WaitPassword"/>
+      <inMessage>
+        <operation name="enterPassword"/>
+      </inMessage>
+      <activation>
+        <outMessage>
+          <operation name="verifyAccount"/>
+          <receiver xsi:type="commonconcepts:SystemActor" name="consortium"/>
+          <returnValue value="badPassword"/>
+        </outMessage>
+        <outMessage>
+          <operation name="requestPassword"/>
+          <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+          <returnValue value="void"/>
+        </outMessage>
+        <returnValue value="void"/>
+      </activation>
+      <postState name="WaitPassword"/>
+    </block>
+    <block>
+      <preState name="WaitPassword"/>
+      <inMessage>
+        <operation name="cancel"/>
+      </inMessage>
+      <activation>
+        <outMessage>
+          <operation name="canceledMessage"/>
+          <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+          <returnValue value="void"/>
+        </outMessage>
+        <outMessage>
+          <operation name="ejectCard"/>
+          <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+          <returnValue value="void"/>
+        </outMessage>
+        <outMessage>
+          <operation name="requestTakeCard"/>
+          <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+          <returnValue value="void"/>
+        </outMessage>
+        <returnValue value="void"/>
+      </activation>
+      <postState name="WaitTakeCard"/>
+    </block>
+    <block>
+      <preState name="WaitTakeCard"/>
+      <inMessage>
+        <operation name="takeCard"/>
+      </inMessage>
+      <activation>
+        <outMessage>
+          <operation name="displayMainScreen"/>
+          <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+          <returnValue value="void"/>
+        </outMessage>
+        <returnValue value="void"/>
+      </activation>
+      <postState name="WaitCard"/>
+    </block>
+  </behaviour>
+  <behaviour>
+    <mainActor name="consortium"/>
+    <block>
+      <preState name="WaitVerify"/>
+      <inMessage>
+        <operation name="verifyAccount"/>
+      </inMessage>
+      <activation>
+        <outMessage>
+          <operation name="verifyCardWithBank"/>
+          <receiver xsi:type="commonconcepts:SystemActor" name="bank"/>
+          <returnValue value="badBankPassword"/>
+        </outMessage>
+        <returnValue value="badPassword"/>
+      </activation>
+      <postState name="WaitVerify"/>
+    </block>
+  </behaviour>
+  <behaviour>
+    <mainActor name="bank"/>
+    <block>
+      <preState name="WaitBankVerify"/>
+      <inMessage>
+        <operation name="verifyCardWithBank"/>
+      </inMessage>
+      <activation>
+        <returnValue value="badBankPassword"/>
+      </activation>
+      <postState name="WaitBankVerify"/>
+    </block>
+  </behaviour>
+  <behaviour>
+    <mainActor name="bank"/>
+    <block>
+      <preState name="WaitBankVerify"/>
+      <inMessage>
+        <operation name="verifyCardWithBank"/>
+      </inMessage>
+      <activation>
+        <returnValue value="badBankAccount"/>
+      </activation>
+      <postState name="WaitBankVerify"/>
+    </block>
+  </behaviour>
+  <behaviour>
+    <mainActor name="consortium"/>
+    <block>
+      <preState name="WaitVerify"/>
+      <inMessage>
+        <operation name="verifyAccount"/>
+      </inMessage>
+      <activation>
+        <outMessage>
+          <operation name="verifyCardWithBank"/>
+          <receiver xsi:type="commonconcepts:SystemActor" name="bank"/>
+          <returnValue value="badBankAccount"/>
+        </outMessage>
+        <returnValue value="badAccount"/>
+      </activation>
+      <postState name="WaitVerify"/>
+    </block>
+  </behaviour>
 </behaviour:BehaviourCollection>

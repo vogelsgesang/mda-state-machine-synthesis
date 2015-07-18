@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trace:Trace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:trace="http:///www.eclipse.org/m2m/qvt/operational/trace.ecore">
+  <traceRecords>
+    <mappingOperation name="model2ScenarioCollection" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//model2ScenarioCollection"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Model">
+        <value>
+          <modelElement href="../uml/atm.uml#_8lZ_MBwEEeW-4Jk5ioTelA"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ScenarioCollection">
+        <value>
+          <modelElement href="atm.scenario#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="interaction2Scenario" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//interaction2Scenario"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Interaction">
+        <value>
+          <modelElement href="../uml/atm.uml#_PWg4cB9gEeWOfN7QRRMe6A"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Scenario">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2SystemCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2SystemCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_yfiDACBEEeWOENsLCXvgCw"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SystemCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.0/@communication.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2SystemCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2SystemCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_PEvI4CBFEeWOENsLCXvgCw"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SystemCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.0/@communication.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2SystemCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2SystemCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_Yjlo8CBFEeWOENsLCXvgCw"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SystemCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.0/@communication.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2UserCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2UserCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_ROE-gCBGEeWOENsLCXvgCw"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UserCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.0/@communication.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2SystemCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2SystemCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_U2KfgCBGEeWOENsLCXvgCw"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SystemCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.0/@communication.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2UserCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2UserCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_dUMbwCBGEeWOENsLCXvgCw"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UserCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.0/@communication.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2UserCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2UserCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_i6D4ECBGEeWOENsLCXvgCw"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UserCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.0/@communication.6"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2UserCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2UserCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_kpGMwCBGEeWOENsLCXvgCw"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UserCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.0/@communication.7"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2SystemCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2SystemCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_2Wv6QCBGEeWOENsLCXvgCw"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SystemCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.0/@communication.8"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2UserCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2UserCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_9D9ZICBGEeWOENsLCXvgCw"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UserCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.0/@communication.9"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="interaction2Scenario" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//interaction2Scenario"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Interaction">
+        <value>
+          <modelElement href="../uml/atm.uml#_8nCW4BwEEeW-4Jk5ioTelA"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Scenario">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2SystemCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2SystemCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_zAVY4B2lEeWtNPFhwbQgKQ"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SystemCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1/@communication.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2UserCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2UserCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_STkyUB2mEeWtNPFhwbQgKQ"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UserCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1/@communication.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2SystemCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2SystemCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_-S-KwB2lEeWtNPFhwbQgKQ"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SystemCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1/@communication.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2SystemCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2SystemCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_DuqXYB2mEeWtNPFhwbQgKQ"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SystemCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1/@communication.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2SystemCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2SystemCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_cjYOMB2mEeWtNPFhwbQgKQ"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SystemCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1/@communication.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2UserCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2UserCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_qmlqQB2mEeWtNPFhwbQgKQ"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UserCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1/@communication.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2UserCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2UserCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_rvnH0B2mEeWtNPFhwbQgKQ"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UserCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1/@communication.6"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2UserCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2UserCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_tQH4UB2mEeWtNPFhwbQgKQ"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UserCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1/@communication.7"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2UserCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2UserCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_vAIdYB2mEeWtNPFhwbQgKQ"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UserCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1/@communication.8"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2SystemCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2SystemCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_xvg0wB2mEeWtNPFhwbQgKQ"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SystemCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1/@communication.9"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="message2UserCommunication" package="uml2scenario" module="uml2scenario">
+      <runtimeMappingOperation href="qvto:/module.env#//message2UserCommunication"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="Message">
+        <value>
+          <modelElement href="../uml/atm.uml#_zLxXYB2mEeWtNPFhwbQgKQ"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UserCommunication">
+        <value>
+          <modelElement href="atm.scenario#//@scenario.1/@communication.10"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+</trace:Trace>

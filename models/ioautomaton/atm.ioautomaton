@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ioAutomaton:AutomatonCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commonconcepts="urn:commonconcepts/1.0" xmlns:ioAutomaton="urn:io-automaton/1.0" xsi:schemaLocation="urn:commonconcepts/1.0 ../../metamodel/CommonConcepts.ecore urn:io-automaton/1.0 ../../metamodel/IOAutomaton.ecore">
+  <automaton startState="//@automaton.0/@state.0">
+    <mainActor name="atm"/>
+    <state name="WaitCard" outgoingTransition="//@automaton.0/@transition.0" incomingTransition="//@automaton.0/@transition.2"/>
+    <state name="WaitPassword" outgoingTransition="//@automaton.0/@transition.1" incomingTransition="//@automaton.0/@transition.0"/>
+    <state name="WaitTakeCard" outgoingTransition="//@automaton.0/@transition.2" incomingTransition="//@automaton.0/@transition.1"/>
+    <transition preState="//@automaton.0/@state.0" postState="//@automaton.0/@state.1">
+      <operation name="insertCard"/>
+      <outMessage>
+        <operation name="requestPassword"/>
+        <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+        <returnValue value="void"/>
+      </outMessage>
+      <returnValue value="void"/>
+    </transition>
+    <transition preState="//@automaton.0/@state.1" postState="//@automaton.0/@state.2">
+      <operation name="enterPassword"/>
+      <outMessage>
+        <operation name="verifyAccount"/>
+        <receiver xsi:type="commonconcepts:SystemActor" name="consortium"/>
+        <returnValue value="badAccount"/>
+      </outMessage>
+      <outMessage>
+        <operation name="badAccountMessage"/>
+        <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+        <returnValue value="void"/>
+      </outMessage>
+      <outMessage>
+        <operation name="printReceipt"/>
+        <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+        <returnValue value="void"/>
+      </outMessage>
+      <outMessage>
+        <operation name="ejectCard"/>
+        <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+        <returnValue value="void"/>
+      </outMessage>
+      <outMessage>
+        <operation name="requestTakeCard"/>
+        <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+        <returnValue value="void"/>
+      </outMessage>
+      <returnValue value="void"/>
+    </transition>
+    <transition preState="//@automaton.0/@state.2" postState="//@automaton.0/@state.0">
+      <operation name="takeCard"/>
+      <outMessage>
+        <operation name="displayMainScreen"/>
+        <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+        <returnValue value="void"/>
+      </outMessage>
+      <returnValue value="void"/>
+    </transition>
+  </automaton>
+  <automaton startState="//@automaton.1/@state.0">
+    <mainActor name="atm"/>
+    <state name="WaitPassword" outgoingTransition="//@automaton.1/@transition.0 //@automaton.1/@transition.1" incomingTransition="//@automaton.1/@transition.0"/>
+    <state name="WaitTakeCard" outgoingTransition="//@automaton.1/@transition.2" incomingTransition="//@automaton.1/@transition.1"/>
+    <state name="WaitCard" incomingTransition="//@automaton.1/@transition.2"/>
+    <transition preState="//@automaton.1/@state.0" postState="//@automaton.1/@state.0">
+      <operation name="enterPassword"/>
+      <outMessage>
+        <operation name="verifyAccount"/>
+        <receiver xsi:type="commonconcepts:SystemActor" name="consortium"/>
+        <returnValue value="badPassword"/>
+      </outMessage>
+      <outMessage>
+        <operation name="requestPassword"/>
+        <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+        <returnValue value="void"/>
+      </outMessage>
+      <returnValue value="void"/>
+    </transition>
+    <transition preState="//@automaton.1/@state.0" postState="//@automaton.1/@state.1">
+      <operation name="cancel"/>
+      <outMessage>
+        <operation name="canceledMessage"/>
+        <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+        <returnValue value="void"/>
+      </outMessage>
+      <outMessage>
+        <operation name="ejectCard"/>
+        <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+        <returnValue value="void"/>
+      </outMessage>
+      <outMessage>
+        <operation name="requestTakeCard"/>
+        <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+        <returnValue value="void"/>
+      </outMessage>
+      <returnValue value="void"/>
+    </transition>
+    <transition preState="//@automaton.1/@state.1" postState="//@automaton.1/@state.2">
+      <operation name="takeCard"/>
+      <outMessage>
+        <operation name="displayMainScreen"/>
+        <receiver xsi:type="commonconcepts:UserActor" name="user"/>
+        <returnValue value="void"/>
+      </outMessage>
+      <returnValue value="void"/>
+    </transition>
+  </automaton>
+  <automaton startState="//@automaton.2/@state.0">
+    <mainActor name="consortium"/>
+    <state name="WaitVerify" outgoingTransition="//@automaton.2/@transition.0" incomingTransition="//@automaton.2/@transition.0"/>
+    <transition preState="//@automaton.2/@state.0" postState="//@automaton.2/@state.0">
+      <operation name="verifyAccount"/>
+      <outMessage>
+        <operation name="verifyCardWithBank"/>
+        <receiver xsi:type="commonconcepts:SystemActor" name="bank"/>
+        <returnValue value="badBankPassword"/>
+      </outMessage>
+      <returnValue value="badPassword"/>
+    </transition>
+  </automaton>
+  <automaton startState="//@automaton.3/@state.0">
+    <mainActor name="bank"/>
+    <state name="WaitBankVerify" outgoingTransition="//@automaton.3/@transition.0" incomingTransition="//@automaton.3/@transition.0"/>
+    <transition preState="//@automaton.3/@state.0" postState="//@automaton.3/@state.0">
+      <operation name="verifyCardWithBank"/>
+      <returnValue value="badBankPassword"/>
+    </transition>
+  </automaton>
+  <automaton startState="//@automaton.4/@state.0">
+    <mainActor name="bank"/>
+    <state name="WaitBankVerify" outgoingTransition="//@automaton.4/@transition.0" incomingTransition="//@automaton.4/@transition.0"/>
+    <transition preState="//@automaton.4/@state.0" postState="//@automaton.4/@state.0">
+      <operation name="verifyCardWithBank"/>
+      <returnValue value="badBankAccount"/>
+    </transition>
+  </automaton>
+  <automaton startState="//@automaton.5/@state.0">
+    <mainActor name="consortium"/>
+    <state name="WaitVerify" outgoingTransition="//@automaton.5/@transition.0" incomingTransition="//@automaton.5/@transition.0"/>
+    <transition preState="//@automaton.5/@state.0" postState="//@automaton.5/@state.0">
+      <operation name="verifyAccount"/>
+      <outMessage>
+        <operation name="verifyCardWithBank"/>
+        <receiver xsi:type="commonconcepts:SystemActor" name="bank"/>
+        <returnValue value="badBankAccount"/>
+      </outMessage>
+      <returnValue value="badAccount"/>
+    </transition>
+  </automaton>
+</ioAutomaton:AutomatonCollection>

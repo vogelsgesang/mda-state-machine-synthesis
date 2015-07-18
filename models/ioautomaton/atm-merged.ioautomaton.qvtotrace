@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trace:Trace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:trace="http:///www.eclipse.org/m2m/qvt/operational/trace.ecore">
+  <traceRecords>
+    <mappingOperation name="mergeAutomatonCollection" package="mergeIoAutomaton" module="mergeIoAutomaton">
+      <runtimeMappingOperation href="qvto:/module.env#//mergeAutomatonCollection"/>
+    </mappingOperation>
+    <context>
+      <context name="self" type="AutomatonCollection">
+        <value>
+          <modelElement href="atm.ioautomaton#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="AutomatonCollection">
+        <value>
+          <modelElement href="atm-merged.ioautomaton#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+</trace:Trace>
